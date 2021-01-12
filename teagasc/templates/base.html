@@ -1,0 +1,25 @@
+{% load static %}
+<html>
+    <head>
+        {% block imag %}
+        <img src="{% static 'teagasc_logo.png' %}" ALIGN = "right" HSPACE="500"/>    <h1> Advisors Application</h1>
+        {% endblock %}
+        <link rel="stylesheet" href="{% static 'css/styles.css' %}"/>
+
+        {% block nav %}
+        <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="#createFarm">Create Farm</a></li>
+            <li><a href="#createFarmer">Create Farmer</a></li>
+            <li><a href="conductAssessment">Conduct Assessment</a></li>
+            <li><a href="#View Assessments">View Assessments</a></li>
+            <li style="float: right"><a href="#farm_records">Farm Records</a></li>
+        </ul>
+        {% endblock %}
+    </head>
+    <body>
+       {% block body %}
+
+       {% endblock %}
+    </body>
+</html>
