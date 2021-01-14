@@ -22,5 +22,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('',views.home,name='home'),
     path('home',views.home,name='home'),
-    path('conductAssessment',views.conductAssessment,name='conductAssessment'),
+    path('conductGrasslandAssessment',views.conductGrasslandAssessment,name='conductGrasslandAssessment'),
+    path('conductGrasslandAssessment2',views.conductGrasslandAssessment2,name='conductGrasslandAssessment2'),
 ]

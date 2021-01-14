@@ -2,17 +2,51 @@ from django.db import models
 from django.contrib.auth.models import User 
 # User already defined in built in app named auth
 
+counties = [
+    ('1','Carlow'),
+    ('2','Cavan'),
+    ('3','Clare'),
+    ('4','Cork'),
+    ('5','Donegal'),
+    ('6','Dublin'),
+    ('7','Galway'),
+    ('8','Kerry'),
+    ('9','Kildare'),
+    ('10','Kilkenny'),
+    ('11','Laois'),
+    ('12','Leitrim'),
+    ('13','Limerick'),
+    ('14','Longford'),
+    ('15','Louth'),
+    ('16','Mayo'),
+    ('17','Meath'),
+    ('18','Monaghan'),
+    ('19','Offaly'),
+    ('20','Roscommon'),
+    ('21','Sligo'),
+    ('22','Tipperary'),
+    ('23','Waterford'),
+    ('24','Westmeath'),
+    ('25','Wexford'),
+    ('26','Wicklow')]
+
 class Farmer(models.Model):
     name = models.CharField(max_length=30)
-    location = models.CharField(max_length=30)
-    year = models.DateField(null=True)
-    land = models.CharField(max_length=30)
-    type_of_stock = models.CharField(max_length=30)
+    address = models.CharField(max_length=30)
+    county = models.CharField(max_length=30,choices=counties,null=True)
+    date = models.DateField(null=True)
     herd_no = models.IntegerField(null=True)
 
 class Grassland(models.Model):
+    owned_land = models.IntegerField(null=True)
+    rented_land = models.IntegerField(null=True)
+    total_grass_area = models.IntegerField(null=True)
+    total_tillage_area = models.IntegerField(null=True)
+    area_reseeded = models.IntegerField(null=True)
+    
     organicN = models.IntegerField(null=True)
     organicP = models.IntegerField(null=True)
+    type_of_stock = models.CharField(max_length=30,null=True)
     grassland_stocking_rate = models.IntegerField(null=True)
     soil_samples = models.CharField(max_length=30)
     reseeding = models.CharField(max_length=30)
