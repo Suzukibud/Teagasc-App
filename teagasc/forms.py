@@ -17,6 +17,19 @@ class Grassland2(forms.Form):
     total_tillage_area = forms.IntegerField(widget = forms.TextInput(attrs={ "class":"formclass"}))
     area_reseeded = forms.IntegerField(widget = forms.TextInput(attrs={ "class":"formclass"}))
 
+class Grassland3(forms.Form):
+    sample_code = forms.CharField(widget = forms.TextInput(attrs={ "class":"formclass"}))
+    date_taken = forms.DateField(widget = forms.TextInput(attrs={ "class":"formclass"}))
+    expiry_date = forms.DateField(widget = forms.TextInput(attrs={ "class":"formclass"}))
+    sample_area = forms.CharField(widget = forms.TextInput(attrs={ "class":"formclass"}))
+    ph = forms.CharField(widget = forms.TextInput(attrs={ "class":"formclass"}))
+    lime_required = forms.CharField(widget = forms.TextInput(attrs={ "class":"formclass"}))
+    p_value = forms.CharField(widget = forms.TextInput(attrs={ "class":"formclass"}))
+    p_index = forms.CharField(widget = forms.TextInput(attrs={ "class":"formclass"}))
+    k_value = forms.CharField(widget = forms.TextInput(attrs={ "class":"formclass"}))
+    k_index = forms.CharField(widget = forms.TextInput(attrs={ "class":"formclass"}))
+    soil_type = forms.CharField(widget = forms.TextInput(attrs={ "class":"formclass"}))
+
     def clean(self):
         cleaned_data = super(GrasslandForm, self).clean()
         name = cleaned_data.get('farmer_name')

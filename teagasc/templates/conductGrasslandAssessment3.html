@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+    {% block body %}
+        <form action = "/home" method="POST" class="formindent">
+            {% csrf_token %}
+            <table style = "display: block;">
+                <tbody>
+                    <tr>
+                        <br>
+                        {% for field in form %}
+                            <td style = "display: inline-block;"> {{ field.label_tag }}
+                                 <br> {{ field }} <br> {{field}}<br><br></td>
+                           
+                        {% endfor %}
+                    </tr>
+                </tbody>
+            </table>
+            <input type = 'submit' value="Submit">
+        </form>
+    {% endblock %}

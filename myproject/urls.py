@@ -24,4 +24,5 @@ urlpatterns = [
     path('home',views.home,name='home'),
     path('conductGrasslandAssessment',views.conductGrasslandAssessment,name='conductGrasslandAssessment'),
     path('conductGrasslandAssessment2',views.conductGrasslandAssessment2,name='conductGrasslandAssessment2'),
+    path('conductGrasslandAssessment3',views.conductGrasslandAssessment3,name='conductGrasslandAssessment3'),
 ]

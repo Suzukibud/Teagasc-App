@@ -1,9 +1,9 @@
 {% extends "base.html" %}
 
     {% block body %}
-        <form action = "/conductGrasslandAssessment3" method="POST" class="formindent">
+        <form action = "/home" method="POST" class="formindent">
             {% csrf_token %}
-            {{form.as_p}}
+            {{form.as_table}}
             <input type = 'submit' value="Submit">
         </form>
     {% endblock %}

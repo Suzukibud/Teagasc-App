@@ -6,6 +6,7 @@ from teagasc.models import Grassland
 from teagasc.models import counties
 from teagasc.forms import GrasslandForm
 from teagasc.forms import Grassland2
+from teagasc.forms import Grassland3
 from django.views.decorators.csrf import csrf_protect
 
 def home(request):
@@ -35,5 +36,23 @@ def conductGrasslandAssessment2(request):
         area_reseeded = form["area_reseeded"].value())
         landInfo.save()
     return render(request, "conductGrasslandAssessment2.html", {'form':Grassland2()})
+
+@csrf_protect
+def conductGrasslandAssessment3(request):
+    if request.method=="POST":
+        form = Grassland3(request.POST)
+        grass3 = Grassland(sample_code = form["sample_code"].value(),
+        date_taken = form["date_taken"].value(),
+        expiry_date = form["expiry_date"].value(),
+        sample_area = form["sample_area"].value(),
+        ph = form["ph"].value(),
+        lime_required = form["lime_required"].value(),
+        p_value = form["p_value"].value(),
+        p_index = form["p_index"].value(),
+        k_value = form["k_value"].value(),
+        k_index = form["k_index"].value())
+        grass3.save()
+    return render(request, "conductGrasslandAssessment3.html", 
+    {'form':Grassland3})
 
 # Create your views here.
