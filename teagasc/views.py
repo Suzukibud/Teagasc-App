@@ -6,7 +6,7 @@ from teagasc.models import Grassland
 from teagasc.models import counties
 from teagasc.forms import GrasslandForm
 from teagasc.forms import Grassland2
-from teagasc.forms import Grassland3
+from teagasc.forms import Grassland3, Grassland4, Grassland5
 from django.views.decorators.csrf import csrf_protect
 
 def home(request):
@@ -43,16 +43,36 @@ def conductGrasslandAssessment3(request):
         form = Grassland3(request.POST)
         grass3 = Grassland(sample_code = form["sample_code"].value(),
         date_taken = form["date_taken"].value(),
-        expiry_date = form["expiry_date"].value(),
         sample_area = form["sample_area"].value(),
         ph = form["ph"].value(),
         lime_required = form["lime_required"].value(),
         p_value = form["p_value"].value(),
-        p_index = form["p_index"].value(),
-        k_value = form["k_value"].value(),
-        k_index = form["k_index"].value())
+        k_value = form["k_value"].value())
         grass3.save()
     return render(request, "conductGrasslandAssessment3.html", 
     {'form':Grassland3})
 
+@csrf_protect
+def conductGrasslandAssessment4(request):
+    if request.method=="POST":
+        form = Grassland4(request.POST)
+        grass4 = Grassland(type_of_feed = form["type_of_feed"].value(),
+        feed_name = form["feed_name"].value(),
+        feed_tonnage = form["tonnage"].value())
+        grass4.save()
+    return render(request, "conductGrasslandAssessment4.html", 
+    {'form':Grassland4})
+
+@csrf_protect
+def conductGrasslandAssessment5(request):
+    if request.method=="POST":
+        form = Grassland5(request.POST)
+        grass5 = Grassland(type_of_stock = form["type_of_animal"].value(),
+        number_of_animals = form["number_of_animals"].value())
+        grass5.save()
+    return render(request, "conductGrasslandAssessment5.html", 
+    {'form':Grassland5})
+
 # Create your views here.
+## expiry_date = form["expiry_date"].value(),
+#   k_index = form["k_index"].value()

@@ -30,6 +30,24 @@ counties = [
     ('25','Wexford'),
     ('26','Wicklow')]
 
+feed_types = [
+    ('1','straight'),
+    ('2','compound')]
+
+livestock_type = [
+    ('1','Dairy Cow'),
+    ('2','Suckler Cow'),
+    ('3','Cattle (0-1 year old)'),
+    ('4','Cattle (1-2 years old)'),
+    ('5','Cattle > 2 years'),
+    ('6','Mountain ewe & lambs'),
+    ('7','Lowland ewe & lambs'),
+    ('8','Mountain hogget'),
+    ('9','Lowland hogget'),
+    ('10','Goat'),
+    ('11','Horse (>3 years old)'),
+    ('12','Horse (2-3 years old)')]
+
 class Farmer(models.Model):
     name = models.CharField(max_length=30)
     address = models.CharField(max_length=30)
@@ -56,6 +74,10 @@ class Grassland(models.Model):
     organicN = models.IntegerField(null=True)
     organicP = models.IntegerField(null=True)
     type_of_stock = models.CharField(max_length=30,null=True)
+    type_of_feed = models.CharField(max_length=30,null=True)
+    feed_name = models.CharField(max_length=30,null=True)
+    feed_tonnage = models.CharField(max_length=30,null=True)
+    number_of_animals = models.CharField(max_length=30,null=True)
     grassland_stocking_rate = models.IntegerField(null=True)
     soil_samples = models.CharField(max_length=30)
     reseeding = models.CharField(max_length=30)

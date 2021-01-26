@@ -1,5 +1,5 @@
 from django import forms
-from .models import counties
+from .models import counties, feed_types, livestock_type
 
 class GrasslandForm(forms.Form):
     farmer_name = forms.CharField(max_length=30, widget = forms.TextInput(attrs={ "class":"formclass"}))
@@ -19,16 +19,22 @@ class Grassland2(forms.Form):
 
 class Grassland3(forms.Form):
     sample_code = forms.CharField(widget = forms.TextInput(attrs={ "class":"formclass"}))
-    date_taken = forms.DateField(widget = forms.TextInput(attrs={ "class":"formclass"}))
-    expiry_date = forms.DateField(widget = forms.TextInput(attrs={ "class":"formclass"}))
+    date_taken = forms.CharField(widget = forms.TextInput(attrs={ "class":"formclass"}))
     sample_area = forms.CharField(widget = forms.TextInput(attrs={ "class":"formclass"}))
     ph = forms.CharField(widget = forms.TextInput(attrs={ "class":"formclass"}))
     lime_required = forms.CharField(widget = forms.TextInput(attrs={ "class":"formclass"}))
     p_value = forms.CharField(widget = forms.TextInput(attrs={ "class":"formclass"}))
-    p_index = forms.CharField(widget = forms.TextInput(attrs={ "class":"formclass"}))
     k_value = forms.CharField(widget = forms.TextInput(attrs={ "class":"formclass"}))
-    k_index = forms.CharField(widget = forms.TextInput(attrs={ "class":"formclass"}))
     soil_type = forms.CharField(widget = forms.TextInput(attrs={ "class":"formclass"}))
+
+class Grassland4(forms.Form):
+    type_of_feed = forms.CharField(label="Please select a Feed Type ", widget=forms.Select(choices=feed_types), max_length=1)
+    feed_name = forms.CharField(widget = forms.TextInput(attrs={ "class":"formclass"}))
+    tonnage = forms.IntegerField(widget = forms.TextInput(attrs={ "class":"formclass"}))
+
+class Grassland5(forms.Form):
+    type_of_animal = forms.CharField(label="Please select a Livestock Type ", widget=forms.Select(choices=livestock_type), max_length=1)
+    number_of_animals = forms.IntegerField(widget = forms.TextInput(attrs={ "class":"formclass"}))
 
     def clean(self):
         cleaned_data = super(GrasslandForm, self).clean()

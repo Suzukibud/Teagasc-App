@@ -1,9 +1,17 @@
 {% extends "base.html" %}
 
     {% block body %}
-        <form action = "/home" method="POST" class="formindent">
+        <form action = "/conductGrasslandAssessment4" method="POST" class="formindent">
             {% csrf_token %}
-            <table style = "display: block;">
+            <table border="1">
+                {{ form }}
+            </table>
+            <input type = 'submit' value="Submit">
+        </form>
+    {% endblock %}
+    
+    
+    <!--<table style = "display: block;">
                 <tbody>
                     <tr>
                         <br>
@@ -14,7 +22,4 @@
                         {% endfor %}
                     </tr>
                 </tbody>
-            </table>
-            <input type = 'submit' value="Submit">
-        </form>
-    {% endblock %}
+            </table>-->
