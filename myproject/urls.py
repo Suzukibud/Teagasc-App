@@ -27,5 +27,5 @@ urlpatterns = [
     path('conductGrasslandAssessment3',views.conductGrasslandAssessment3,name='conductGrasslandAssessment3'),
     path('conductGrasslandAssessment4',views.conductGrasslandAssessment4,name='conductGrasslandAssessment4'),
     path('conductGrasslandAssessment5',views.conductGrasslandAssessment5,name='conductGrasslandAssessment5'),
-    path('conductGrasslandAssessmentResult',views.conductGrasslandAssessment3,name='conductGrasslandAssessmentResult'),
+    path('conductGrasslandAssessmentResult',views.grasslandAssessmentResult,name='grasslandAssessmentResult'),
 ]

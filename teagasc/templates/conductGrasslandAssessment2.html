@@ -1,9 +1,12 @@
 {% extends "base.html" %}
 
     {% block body %}
-        <form action = "/conductGrasslandAssessment3" method="POST" class="formindent">
+        <form action = "/conductGrasslandAssessment2" method="POST" class="formindent">
             {% csrf_token %}
-            {{form.as_p}}
+            <table>
+                {{ form }}
+            </table>
             <input type = 'submit' value="Submit">
+            <input type = 'reset' value="Clear">
         </form>
     {% endblock %}

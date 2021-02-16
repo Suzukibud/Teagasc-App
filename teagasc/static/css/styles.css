@@ -25,7 +25,38 @@ li a:hover:not(.active){
     padding: 14px 16px;
     align-items: center;
 }
+
 .formindent {
-    margin-left: 15%;
+    margin-left: 15%;    
+}
+
+table {
+    /* padding: 14px 16px; */
+    margin-top: 2em;
+    align-items: center;
+    border:1px #666666;
+    border-collapse: collapse;
+}
+
+body {
+    text-align: center;
+    font-size: 13px;
+    color: #333333;
+}
+
+.formclass .my-button {
     
+    color: red;
+    background: #f00;
+}
+
+input.button:hover {
+    background: green;
+    color: indigo;
+}
+
+input[type=submit] {
+    width: 80px;
+    height: 40px;
+    color: purple;
 }

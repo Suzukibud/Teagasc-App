@@ -1,0 +1,64 @@
+ul {
+    list-style-type:none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: green;
+}
+li {
+    float: left;
+}
+li a {
+    display: block;
+    color: yellow;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+li a:hover:not(.active){
+    background-color: #111;
+}
+.active {
+    background-color: green;
+}
+.formclass {
+    padding: 14px 16px;
+    align-items: center;
+}
+
+.formindent {
+    margin-left: 15%;
+    margin-top: 15%;
+    
+}
+
+table {
+    padding: 14px 16px;
+    align-items: center;
+    border:1px #666666;
+    border-collapse: collapse;
+}
+
+body {
+    text-align: center;
+    font-size: 13px;
+    color: #333333;
+}
+
+.formclass .my-button {
+    width: 20px;
+    position: absolute;
+    right: 20px;
+    height: 40px;
+    color: red;
+    background: #f00;
+}
+
+input.button:hover {
+    background: green;
+    color: indigo;
+}
+
+input[type=submit] {
+    color: red;
+}

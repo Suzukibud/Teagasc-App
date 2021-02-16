@@ -1,13 +1,10 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.template.response import TemplateResponse
-from teagasc.models import Farmer
-from teagasc.models import Grassland
-from teagasc.models import counties
-from teagasc.forms import GrasslandForm
-from teagasc.forms import Grassland2
-from teagasc.forms import Grassland3, Grassland4, Grassland5
+from teagasc.models import Farmer,Grassland,counties
+from teagasc.forms import GrasslandForm,Grassland2,Grassland3, Grassland4, Grassland5
 from django.views.decorators.csrf import csrf_protect
+from datetime import datetime
 
 def home(request):
     #e = Exportation(exportation_original_stocking_rate = 15,
@@ -21,20 +18,25 @@ def conductGrasslandAssessment(request):
         form = GrasslandForm(request.POST)
         farmer = Farmer(name = form["farmer_name"].value(),
         address = form["farmer_address_line_1"].value() + " " + form["farmer_address_line_2"].value() + " " + form["farmer_address_line_3"].value(),
-        date = "2020-12-12", herd_no = form["herd_no"].value(), county = form["county"].value())
+        date = form["date"].value(), county = form["county"].value(), herd_no = form["herd_no"].value())
         farmer.save()
+        request.session["farmer_id"] = farmer.id
+        return redirect("/conductGrasslandAssessment2")
     return render(request, "conductGrasslandAssessment.html", {'form':GrasslandForm()})
 
 @csrf_protect
 def conductGrasslandAssessment2(request):
     if request.method=="POST":
         form = Grassland2(request.POST)
-        landInfo = Grassland(owned_land = form["owned_land"].value(),
-        rented_land = form["rented_land"].value(),
-        total_grass_area = form["total_grass_area"].value(), 
-        total_tillage_area = form["total_tillage_area"].value(), 
-        area_reseeded = form["area_reseeded"].value())
+        farmer = Farmer.objects.get(id = request.session.get("farmer_id"))
+        landInfo = Grassland(farmer_id = farmer, owned_land = (owned := int(form["owned_land"].value())),
+        rented_land = (rented := int(form["rented_land"].value())),
+        total_tillage_area = (tillage := int(form["total_tillage_area"].value())), 
+        area_reseeded = int(form["area_reseeded"].value()),
+        total_grass_area = (area := (owned + rented)),
+        total_land_area = area + tillage)
         landInfo.save()
+        return redirect("/conductGrasslandAssessment3")
     return render(request, "conductGrasslandAssessment2.html", {'form':Grassland2()})
 
 @csrf_protect
@@ -49,6 +51,7 @@ def conductGrasslandAssessment3(request):
         p_value = form["p_value"].value(),
         k_value = form["k_value"].value())
         grass3.save()
+        return redirect("/conductGrasslandAssessment4")
     return render(request, "conductGrasslandAssessment3.html", 
     {'form':Grassland3})
 
@@ -60,6 +63,7 @@ def conductGrasslandAssessment4(request):
         feed_name = form["feed_name"].value(),
         feed_tonnage = form["tonnage"].value())
         grass4.save()
+        return redirect("/conductGrasslandAssessment5")
     return render(request, "conductGrasslandAssessment4.html", 
     {'form':Grassland4})
 
@@ -72,6 +76,11 @@ def conductGrasslandAssessment5(request):
         grass5.save()
     return render(request, "conductGrasslandAssessment5.html", 
     {'form':Grassland5})
+
+
+@csrf_protect
+def grasslandAssessmentResult(request):
+    pass
 
 # Create your views here.
 ## expiry_date = form["expiry_date"].value(),

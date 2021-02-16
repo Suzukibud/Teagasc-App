@@ -53,13 +53,15 @@ class Farmer(models.Model):
     address = models.CharField(max_length=30)
     county = models.CharField(max_length=30,choices=counties,null=True)
     date = models.DateField(null=True)
-    herd_no = models.IntegerField(null=True)
+    herd_no = models.CharField(max_length=30)    
 
 class Grassland(models.Model):
+    farmer_id = models.ForeignKey(Farmer, on_delete = models.CASCADE, default=1)
     owned_land = models.IntegerField(null=True)
     rented_land = models.IntegerField(null=True)
     total_grass_area = models.IntegerField(null=True)
     total_tillage_area = models.IntegerField(null=True)
+    total_land_area = models.IntegerField(null=True)
     area_reseeded = models.IntegerField(null=True)
     sample_code = models.CharField(max_length=30,null=True)
     date_taken = models.DateField(null=True)

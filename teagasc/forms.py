@@ -1,4 +1,5 @@
 from django import forms
+from django.conf import settings
 from .models import counties, feed_types, livestock_type
 
 class GrasslandForm(forms.Form):
@@ -6,14 +7,13 @@ class GrasslandForm(forms.Form):
     farmer_address_line_1 = forms.CharField(max_length=30, required=True, widget = forms.TextInput(attrs={ "class":"formclass"}))
     farmer_address_line_2 = forms.CharField(max_length=30, widget = forms.TextInput(attrs={ "class":"formclass"}))
     farmer_address_line_3 = forms.CharField(max_length=30, widget = forms.TextInput(attrs={ "class":"formclass"}))
-    date = forms.DateField(widget = forms.TextInput(attrs={ "class":"formclass"}))
-    county = forms.CharField(label="Please select a County ", widget=forms.Select(choices=counties), max_length=1)
-    herd_no = forms.IntegerField(widget = forms.TextInput(attrs={ "class":"formclass"}))
+    date = forms.DateField(localize=True, widget = forms.TextInput(attrs={ "class":"formclass"}))
+    county = forms.CharField(label="Please select a County ", widget=forms.Select(choices=counties, attrs={ "class":"formclass", 'style':'width:276px'}), max_length=1)
+    herd_no = forms.CharField(widget = forms.TextInput(attrs={ "class":"formclass"}))
 
 class Grassland2(forms.Form):
     owned_land = forms.IntegerField(widget = forms.TextInput(attrs={ "class":"formclass"}))
     rented_land = forms.IntegerField(widget = forms.TextInput(attrs={ "class":"formclass"}))
-    total_grass_area = forms.IntegerField(widget = forms.TextInput(attrs={ "class":"formclass"}))
     total_tillage_area = forms.IntegerField(widget = forms.TextInput(attrs={ "class":"formclass"}))
     area_reseeded = forms.IntegerField(widget = forms.TextInput(attrs={ "class":"formclass"}))
 
