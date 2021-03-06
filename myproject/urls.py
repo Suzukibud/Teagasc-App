@@ -20,12 +20,12 @@ from teagasc import views
 
 urlpatterns = [	
     path('admin/', admin.site.urls),
-    path('',views.home,name='home'),
+    path('',views.grasslandAssessmentResult,name='home'),
     path('home',views.home,name='home'),
     path('conductGrasslandAssessment',views.conductGrasslandAssessment,name='conductGrasslandAssessment'),
     path('conductGrasslandAssessment2',views.conductGrasslandAssessment2,name='conductGrasslandAssessment2'),
     path('conductGrasslandAssessment3',views.conductGrasslandAssessment3,name='conductGrasslandAssessment3'),
     path('conductGrasslandAssessment4',views.conductGrasslandAssessment4,name='conductGrasslandAssessment4'),
     path('conductGrasslandAssessment5',views.conductGrasslandAssessment5,name='conductGrasslandAssessment5'),
-    path('conductGrasslandAssessmentResult',views.grasslandAssessmentResult,name='grasslandAssessmentResult'),
+    path('grasslandReport',views.grasslandAssessmentResult,name='grasslandAssessmentResult'),
 ]

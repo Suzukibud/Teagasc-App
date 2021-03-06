@@ -1,10 +1,12 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.template.response import TemplateResponse
-from teagasc.models import Farmer,Grassland,counties
+from teagasc.models import Farmer,Grassland,counties, Monthly_Livestock_Numbers, Farmer_Livestock, Farmer_Feed, Feed_Types
 from teagasc.forms import GrasslandForm,Grassland2,Grassland3, Grassland4, Grassland5
 from django.views.decorators.csrf import csrf_protect
 from datetime import datetime
+from dateutil.parser import parse
+import ipdb
 
 def home(request):
     #e = Exportation(exportation_original_stocking_rate = 15,
@@ -16,11 +18,16 @@ def home(request):
 def conductGrasslandAssessment(request):
     if request.method=="POST":
         form = GrasslandForm(request.POST)
+
         farmer = Farmer(name = form["farmer_name"].value(),
-        address = form["farmer_address_line_1"].value() + " " + form["farmer_address_line_2"].value() + " " + form["farmer_address_line_3"].value(),
-        date = form["date"].value(), county = form["county"].value(), herd_no = form["herd_no"].value())
+        address = form["farmer_address_line_1"].value() + " " + form["farmer_address_line_2"].value()
+         + " " + form["farmer_address_line_3"].value(),
+        date = parse(form["date"].value(), dayfirst = True).strftime("%Y-%m-%d"), 
+        county = form["county"].value(), herd_no = form["herd_no"].value())
+
         farmer.save()
         request.session["farmer_id"] = farmer.id
+
         return redirect("/conductGrasslandAssessment2")
     return render(request, "conductGrasslandAssessment.html", {'form':GrasslandForm()})
 
@@ -28,14 +35,19 @@ def conductGrasslandAssessment(request):
 def conductGrasslandAssessment2(request):
     if request.method=="POST":
         form = Grassland2(request.POST)
+
         farmer = Farmer.objects.get(id = request.session.get("farmer_id"))
-        landInfo = Grassland(farmer_id = farmer, owned_land = (owned := int(form["owned_land"].value())),
-        rented_land = (rented := int(form["rented_land"].value())),
-        total_tillage_area = (tillage := int(form["total_tillage_area"].value())), 
-        area_reseeded = int(form["area_reseeded"].value()),
+
+        landInfo = Grassland(farmer_id = farmer, owned_land = (owned := float(form["owned_land"].value())),
+        rented_land = (rented := float(form["rented_land"].value())),
+        total_tillage_area = (tillage := float(form["total_tillage_area"].value())), 
+        area_reseeded = float(form["area_reseeded"].value()),
         total_grass_area = (area := (owned + rented)),
         total_land_area = area + tillage)
         landInfo.save()
+        
+        request.session["grassland_id"] = landInfo.id
+
         return redirect("/conductGrasslandAssessment3")
     return render(request, "conductGrasslandAssessment2.html", {'form':Grassland2()})
 
@@ -43,14 +55,19 @@ def conductGrasslandAssessment2(request):
 def conductGrasslandAssessment3(request):
     if request.method=="POST":
         form = Grassland3(request.POST)
-        grass3 = Grassland(sample_code = form["sample_code"].value(),
-        date_taken = form["date_taken"].value(),
-        sample_area = form["sample_area"].value(),
-        ph = form["ph"].value(),
-        lime_required = form["lime_required"].value(),
-        p_value = form["p_value"].value(),
-        k_value = form["k_value"].value())
-        grass3.save()
+
+        grass = Grassland.objects.get(id = request.session.get("grassland_id"))
+
+        grass.sample_code = form["sample_code"].value()
+        grass.sample_area = form["sample_area"].value()
+        grass.date_taken = (date := parse(form["date_taken"].value(), dayfirst = True)).strftime("%Y-%m-%d")
+        grass.expiry_date = date.replace(year = date.year + 5)
+        grass.ph = form["ph"].value()
+        grass.lime_required = form["lime_required"].value()
+        grass.p_value = form["p_value"].value()
+        grass.k_value = form["k_value"].value()
+        grass.save()
+
         return redirect("/conductGrasslandAssessment4")
     return render(request, "conductGrasslandAssessment3.html", 
     {'form':Grassland3})
@@ -59,28 +76,117 @@ def conductGrasslandAssessment3(request):
 def conductGrasslandAssessment4(request):
     if request.method=="POST":
         form = Grassland4(request.POST)
-        grass4 = Grassland(type_of_feed = form["type_of_feed"].value(),
-        feed_name = form["feed_name"].value(),
-        feed_tonnage = form["tonnage"].value())
-        grass4.save()
+
+        # need to get a value to associate the feeds with for grassland table
+        # possibly feed tonnage 
+        farmer = Farmer.objects.get(id = request.session.get("farmer_id"))
+        grass = Grassland.objects.get(id = request.session.get("grassland_id"))
+
+        num_of_feed = Farmer_Feed(farmer_id = farmer,
+            number_compound  = (num1 := float(form['number_compound'].value())),
+            number_wheat = (num2 := float(form['number_wheat'].value())),
+            number_maize = (num3 := float(form['number_maize'].value())),
+            number_maize_germ = (num4 := float(form['number_maize_germ'].value())),
+            number_oats = (num5 := float(form['number_oats'].value())),
+            number_beat_pulps_molassed = (num6 := float(form['number_beat_pulps_molassed'].value())),
+            number_beat_pulp_unmolassed = (num7 := float(form['number_beat_pulp_unmolassed'].value())),
+            number_citrus_pulp = (num8 := float(form['number_citrus_pulp'].value())),
+            number_maize_distiller = (num9 := float(form['number_maize_distiller'].value())),
+            number_maize_gluten = (num10 := float(form['number_maize_gluten'].value())),
+            number_copra = (num11 := float(form['number_copra'].value())),
+            number_cotton_seed = (num12 := float(form['number_cotton_seed'].value())),
+            number_palm_kernel = (num13 := float(form['number_palm_kernel'].value())),
+            number_rapeseed = (num14 := float(form['number_rapeseed'].value())),
+            number_soya_bean = (num15 := float(form['number_soya_bean'].value())),
+            number_sunflower = (num16 := float(form['number_sunflower'].value())),
+            number_peas = (num17 := float(form['number_peas'].value())),
+            number_beans = (num18 := float(form['number_beans'].value())),
+            number_soya_hulls = (num19 := float(form['number_soya_hulls'].value())),
+            number_distillers_grain = (num20 := float(form['number_distillers_grain'].value())),
+            number_lucerne = (num21 := float(form['number_lucerne'].value())))
+        
+        grass.feed_tonnage = (total := (num1 + num2 + num3 + num4 + num5 + num6 + num7 + num8 + num9 + num10 + num11 + num12 + num13 + num14 +num15 + num16 + num17 + num18 + num19 + num20 + num21))
+        grass.save()
+        num_of_feed.save()
         return redirect("/conductGrasslandAssessment5")
-    return render(request, "conductGrasslandAssessment4.html", 
-    {'form':Grassland4})
+    results = Feed_Types.objects.all()
+    form = Grassland4()
+    form = list(zip(results, form))
+    return render(request, "conductGrasslandAssessment4.html", {'form':form})
 
 @csrf_protect
 def conductGrasslandAssessment5(request):
     if request.method=="POST":
-        form = Grassland5(request.POST)
-        grass5 = Grassland(type_of_stock = form["type_of_animal"].value(),
-        number_of_animals = form["number_of_animals"].value())
-        grass5.save()
-    return render(request, "conductGrasslandAssessment5.html", 
-    {'form':Grassland5})
+        form = Grassland5(request.POST) 
+
+        farmer = Farmer.objects.get(id = request.session.get("farmer_id"))
+        grass = Grassland.objects.get(id = request.session.get("grassland_id"))
+        num_of_stock = Farmer_Livestock(farmer_id = farmer,
+         number_dairy_cows = (num1 := float(form['number_dairy_cows'].value())),
+         number_suckler_cows = (num2 := float(form['number_suckler_cows'].value())),
+         number_cattle1 = (num3 := float(form['number_cattle1'].value())),
+         number_cattle2 = (num4 := float(form['number_cattle2'].value())),
+         number_cattle3 = (num5 := float(form['number_cattle3'].value())),
+         number_mountain_ewe = (num6 := float(form['number_mountain_ewe'].value())),
+         number_lowland_ewe = (num7 := float(form['number_lowland_ewe'].value())),
+         number_mountain_hogget = (num8 := float(form['number_mountain_hogget'].value())),
+         number_lowland_hogget = (num9 := float(form['number_lowland_hogget'].value())),
+         number_goats = (num10 := float(form['number_goats'].value())),
+         number_horse1 = (num11 := float(form['number_horse1'].value())),
+         number_horse2 = (num12 := float(form['number_horse2'].value())))
+
+        animal_list = [
+            num1,
+            num2,
+            num3,
+            num4,
+            num5,
+            num6,
+            num7,
+            num8,
+            num9,
+            num10,
+            num11,
+            num12
+        ]
+        total_nitrates = 0
+        grass.number_of_animals = (total := (num1 + num2 + num3 + num4 + num5 + num6 + num7 + num8 + num9 + num10 + num11 + num12))
+        nitrate_results = Monthly_Livestock_Numbers.objects.values_list('organic_nitrates', flat=True)
+        for a, b in zip(animal_list, nitrate_results):
+            total_nitrates += a * b
+        grass.organicN = total_nitrates
+
+        total_potassium = 0
+        potass_results = Monthly_Livestock_Numbers.objects.values_list('organic_potassium', flat = True)
+        for c,d in zip(animal_list,potass_results):
+            total_potassium += c * d
+        grass.organicP = total_potassium
+        
+        num_of_stock.save()
+        grass.save()
+        return redirect("/grasslandReport")
+    results = Monthly_Livestock_Numbers.objects.all()
+    form = Grassland5()
+    form = list(zip(results, form))
+    return render(request, "conductGrasslandAssessment5.html", {'form':form})
 
 
 @csrf_protect
 def grasslandAssessmentResult(request):
-    pass
+    everything = Grassland.objects.filter(farmer_id = request.session.get("farmer_id"))
+    list_for_result = list()
+    for row in everything:
+        total_organic_n = row.organicN
+        total_organic_p = row.organicP 
+        total_land_area = row.total_land_area
+        total_grass_area = row.total_grass_area
+    
+        gsr = total_organic_n / total_grass_area
+        wfsr = total_organic_n / total_land_area
+        
+        list_for_result.append((total_organic_n,total_organic_p, total_land_area, round(gsr,2), round(wfsr,2)))
+
+    return render(request, "grasslandReport.html", {'list_for_result':list_for_result})
 
 # Create your views here.
 ## expiry_date = form["expiry_date"].value(),

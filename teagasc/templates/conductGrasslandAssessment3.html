@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
     {% block body %}
-        <form action = "/conductGrasslandAssessment3" method="POST" class="formindent">
+        <form action = "/conductGrasslandAssessment3" method="POST" id="cssTable">
             {% csrf_token %}
             <table border="1">
                 {{ form }}

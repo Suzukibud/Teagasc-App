@@ -117,11 +117,15 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-GB'
 
-TIME_ZONE = 'GB'
+# DATETIME_INPUT_FORMATS = ['%d-%m-%Y']
 
-DATE_FORMAT = "%d#%m#%Y"
+# DATETIME_FORMAT = "%d#%m#%Y"
 
-DATE_INPUT_FORMATS = ["%d %m %Y" , "%d/%m/%Y"]
+# YEAR_MONTH_FORMAT = "%m-%Y"
+
+# SHORT_DATE_FORMAT = "%d-%m-%Y"
+
+# SHORT_DATETIME_FORMAT = "%d-%m-%Y"
 
 USE_I18N = True
 

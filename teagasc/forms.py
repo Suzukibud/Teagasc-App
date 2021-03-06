@@ -2,20 +2,22 @@ from django import forms
 from django.conf import settings
 from .models import counties, feed_types, livestock_type
 
+
 class GrasslandForm(forms.Form):
     farmer_name = forms.CharField(max_length=30, widget = forms.TextInput(attrs={ "class":"formclass"}))
     farmer_address_line_1 = forms.CharField(max_length=30, required=True, widget = forms.TextInput(attrs={ "class":"formclass"}))
     farmer_address_line_2 = forms.CharField(max_length=30, widget = forms.TextInput(attrs={ "class":"formclass"}))
     farmer_address_line_3 = forms.CharField(max_length=30, widget = forms.TextInput(attrs={ "class":"formclass"}))
-    date = forms.DateField(localize=True, widget = forms.TextInput(attrs={ "class":"formclass"}))
+    date = forms.DateField(widget = forms.TextInput(attrs={ "class":"formclass"}))
+    date.input_formats = "%d-%m-%Y"
     county = forms.CharField(label="Please select a County ", widget=forms.Select(choices=counties, attrs={ "class":"formclass", 'style':'width:276px'}), max_length=1)
     herd_no = forms.CharField(widget = forms.TextInput(attrs={ "class":"formclass"}))
 
 class Grassland2(forms.Form):
-    owned_land = forms.IntegerField(widget = forms.TextInput(attrs={ "class":"formclass"}))
-    rented_land = forms.IntegerField(widget = forms.TextInput(attrs={ "class":"formclass"}))
-    total_tillage_area = forms.IntegerField(widget = forms.TextInput(attrs={ "class":"formclass"}))
-    area_reseeded = forms.IntegerField(widget = forms.TextInput(attrs={ "class":"formclass"}))
+    owned_land = forms.FloatField(widget = forms.TextInput(attrs={ "class":"formclass"}))
+    rented_land = forms.FloatField(widget = forms.TextInput(attrs={ "class":"formclass"}))
+    total_tillage_area = forms.FloatField(widget = forms.TextInput(attrs={ "class":"formclass"}))
+    area_reseeded = forms.FloatField(widget = forms.TextInput(attrs={ "class":"formclass"}))
 
 class Grassland3(forms.Form):
     sample_code = forms.CharField(widget = forms.TextInput(attrs={ "class":"formclass"}))
@@ -28,13 +30,41 @@ class Grassland3(forms.Form):
     soil_type = forms.CharField(widget = forms.TextInput(attrs={ "class":"formclass"}))
 
 class Grassland4(forms.Form):
-    type_of_feed = forms.CharField(label="Please select a Feed Type ", widget=forms.Select(choices=feed_types), max_length=1)
-    feed_name = forms.CharField(widget = forms.TextInput(attrs={ "class":"formclass"}))
-    tonnage = forms.IntegerField(widget = forms.TextInput(attrs={ "class":"formclass"}))
+    number_compound = forms.IntegerField(widget = forms.TextInput(attrs={ "class":"formclass"}))
+    number_wheat = forms.IntegerField(widget = forms.TextInput(attrs={ "class":"formclass"}))
+    number_maize = forms.IntegerField(widget = forms.TextInput(attrs={ "class":"formclass"}))
+    number_maize_germ = forms.IntegerField(widget = forms.TextInput(attrs={ "class":"formclass"}))
+    number_oats = forms.IntegerField(widget = forms.TextInput(attrs={ "class":"formclass"}))
+    number_beat_pulps_molassed = forms.IntegerField(widget = forms.TextInput(attrs={ "class":"formclass"}))
+    number_beat_pulp_unmolassed = forms.IntegerField(widget = forms.TextInput(attrs={ "class":"formclass"}))
+    number_citrus_pulp = forms.IntegerField(widget = forms.TextInput(attrs={ "class":"formclass"}))
+    number_maize_distiller = forms.IntegerField(widget = forms.TextInput(attrs={ "class":"formclass"}))
+    number_maize_gluten = forms.IntegerField(widget = forms.TextInput(attrs={ "class":"formclass"}))
+    number_copra = forms.IntegerField(widget = forms.TextInput(attrs={ "class":"formclass"}))
+    number_cotton_seed = forms.IntegerField(widget = forms.TextInput(attrs={ "class":"formclass"}))
+    number_palm_kernel = forms.IntegerField(widget = forms.TextInput(attrs={ "class":"formclass"}))
+    number_rapeseed = forms.IntegerField(widget = forms.TextInput(attrs={ "class":"formclass"}))
+    number_soya_bean = forms.IntegerField(widget = forms.TextInput(attrs={ "class":"formclass"}))
+    number_sunflower = forms.IntegerField(widget = forms.TextInput(attrs={ "class":"formclass"}))
+    number_peas = forms.IntegerField(widget = forms.TextInput(attrs={ "class":"formclass"}))
+    number_beans = forms.IntegerField(widget = forms.TextInput(attrs={ "class":"formclass"}))
+    number_soya_hulls = forms.IntegerField(widget = forms.TextInput(attrs={ "class":"formclass"}))
+    number_distillers_grain = forms.IntegerField(widget = forms.TextInput(attrs={ "class":"formclass"}))
+    number_lucerne =  forms.IntegerField(widget = forms.TextInput(attrs={ "class":"formclass"}))
 
 class Grassland5(forms.Form):
-    type_of_animal = forms.CharField(label="Please select a Livestock Type ", widget=forms.Select(choices=livestock_type), max_length=1)
-    number_of_animals = forms.IntegerField(widget = forms.TextInput(attrs={ "class":"formclass"}))
+    number_dairy_cows = forms.IntegerField(widget = forms.TextInput(attrs={ "class":"formclass"}))
+    number_suckler_cows = forms.IntegerField(widget = forms.TextInput(attrs={ "class":"formclass"}))
+    number_cattle1 = forms.IntegerField(widget = forms.TextInput(attrs={ "class":"formclass"}))
+    number_cattle2 = forms.IntegerField(widget = forms.TextInput(attrs={ "class":"formclass"}))
+    number_cattle3 = forms.IntegerField(widget = forms.TextInput(attrs={ "class":"formclass"}))
+    number_mountain_ewe = forms.IntegerField(widget = forms.TextInput(attrs={ "class":"formclass"}))
+    number_lowland_ewe = forms.IntegerField(widget = forms.TextInput(attrs={ "class":"formclass"}))
+    number_mountain_hogget = forms.IntegerField(widget = forms.TextInput(attrs={ "class":"formclass"}))
+    number_lowland_hogget = forms.IntegerField(widget = forms.TextInput(attrs={ "class":"formclass"}))
+    number_goats = forms.IntegerField(widget = forms.TextInput(attrs={ "class":"formclass"}))
+    number_horse1 = forms.IntegerField(widget = forms.TextInput(attrs={ "class":"formclass"}))
+    number_horse2 = forms.IntegerField(widget = forms.TextInput(attrs={ "class":"formclass"}))
 
     def clean(self):
         cleaned_data = super(GrasslandForm, self).clean()

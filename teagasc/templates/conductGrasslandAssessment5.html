@@ -1,11 +1,26 @@
 {% extends "base.html" %}
 
     {% block body %}
-        <form action = "/home" method="POST" class="formindent">
+
+        <form action = "/conductGrasslandAssessment5" method="POST" id="cssTable">
             {% csrf_token %}
-            <table border="1">
-                {{ form }}
-            </table>
+                <table border="1" id="table">
+                        <tr>
+                           <th scope="col">Type of Livestock</th>
+                           <th scope="col">Nitrogen</th>
+                           <th scope="col">Phosphuros</th>
+                           <th>Number of Animals</th>
+                       </tr>
+                       {% for task,field in form %}
+                       <tr>
+                           <td>{{ task.type_of_animal }}</td>
+                           <td>{{ task.organic_nitrates }}</td>
+                           <td>{{ task.organic_potassium }}</td>
+                           <td>{{ field }}</td>
+                           <br>
+                       </tr>
+                       {% endfor %}
+                </table>
             <input type = 'submit' value="Submit">
         </form>
     {% endblock %}
