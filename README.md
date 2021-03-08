@@ -2,7 +2,7 @@
 
 # Author : Damien Doran
 # Start Date : 02/11/2020
-# Student of It Carlow
+# Student of IT Carlow
 
 
 This app will be designed to function as a tool for a Teagasc advisor to assess farmers grant applications.
