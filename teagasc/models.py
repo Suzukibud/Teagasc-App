@@ -60,6 +60,7 @@ class Grassland(models.Model):
     farmer_id = models.ForeignKey(Farmer, on_delete = models.CASCADE, default=1)
     owned_land = models.FloatField(null=True)
     rented_land = models.FloatField(null=True)
+    time_rented = models.IntegerField(null=True)
     total_grass_area = models.FloatField(null=True)
     total_tillage_area = models.FloatField(null=True)
     total_land_area = models.FloatField(null=True)
@@ -197,6 +198,10 @@ class Farmer_Feed(models.Model):
     number_soya_hulls = models.IntegerField(null=True)
     number_distillers_grain = models.IntegerField(null=True)
     number_lucerne =  models.IntegerField(null=True)
+
+
+
+
 
 
 

@@ -8,6 +8,7 @@ from datetime import datetime
 from dateutil.parser import parse
 import ipdb
 
+
 def home(request):
     #e = Exportation(exportation_original_stocking_rate = 15,
     #export = 20, person_accepting_import = "MIchael", new_stocking_rate = 20)
@@ -31,6 +32,15 @@ def conductGrasslandAssessment(request):
         return redirect("/conductGrasslandAssessment2")
     return render(request, "conductGrasslandAssessment.html", {'form':GrasslandForm()})
 
+def record5_calculations(owned,rented,time):
+            time /= 12
+            rounded_time = round(time,2)
+            rented = rented * time
+            rounded_rented = round(rented,2)
+            owned += rounded_rented
+
+            return owned
+
 @csrf_protect
 def conductGrasslandAssessment2(request):
     if request.method=="POST":
@@ -40,12 +50,13 @@ def conductGrasslandAssessment2(request):
 
         landInfo = Grassland(farmer_id = farmer, owned_land = (owned := float(form["owned_land"].value())),
         rented_land = (rented := float(form["rented_land"].value())),
+        time_rented = (time_r := int(form["time_rented"].value())),
         total_tillage_area = (tillage := float(form["total_tillage_area"].value())), 
         area_reseeded = float(form["area_reseeded"].value()),
-        total_grass_area = (area := (owned + rented)),
+        total_grass_area = (area := record5_calculations(owned,rented,time_r)),
         total_land_area = area + tillage)
         landInfo.save()
-        
+
         request.session["grassland_id"] = landInfo.id
 
         return redirect("/conductGrasslandAssessment3")
@@ -122,18 +133,18 @@ def conductGrasslandAssessment5(request):
         farmer = Farmer.objects.get(id = request.session.get("farmer_id"))
         grass = Grassland.objects.get(id = request.session.get("grassland_id"))
         num_of_stock = Farmer_Livestock(farmer_id = farmer,
-         number_dairy_cows = (num1 := float(form['number_dairy_cows'].value())),
-         number_suckler_cows = (num2 := float(form['number_suckler_cows'].value())),
-         number_cattle1 = (num3 := float(form['number_cattle1'].value())),
-         number_cattle2 = (num4 := float(form['number_cattle2'].value())),
-         number_cattle3 = (num5 := float(form['number_cattle3'].value())),
-         number_mountain_ewe = (num6 := float(form['number_mountain_ewe'].value())),
-         number_lowland_ewe = (num7 := float(form['number_lowland_ewe'].value())),
-         number_mountain_hogget = (num8 := float(form['number_mountain_hogget'].value())),
-         number_lowland_hogget = (num9 := float(form['number_lowland_hogget'].value())),
-         number_goats = (num10 := float(form['number_goats'].value())),
-         number_horse1 = (num11 := float(form['number_horse1'].value())),
-         number_horse2 = (num12 := float(form['number_horse2'].value())))
+            number_dairy_cows = (num1 := float(form['number_dairy_cows'].value())),
+            number_suckler_cows = (num2 := float(form['number_suckler_cows'].value())),
+            number_cattle1 = (num3 := float(form['number_cattle1'].value())),
+            number_cattle2 = (num4 := float(form['number_cattle2'].value())),
+            number_cattle3 = (num5 := float(form['number_cattle3'].value())),
+            number_mountain_ewe = (num6 := float(form['number_mountain_ewe'].value())),
+            number_lowland_ewe = (num7 := float(form['number_lowland_ewe'].value())),
+            number_mountain_hogget = (num8 := float(form['number_mountain_hogget'].value())),
+            number_lowland_hogget = (num9 := float(form['number_lowland_hogget'].value())),
+            number_goats = (num10 := float(form['number_goats'].value())),
+            number_horse1 = (num11 := float(form['number_horse1'].value())),
+            number_horse2 = (num12 := float(form['number_horse2'].value())))
 
         animal_list = [
             num1,
@@ -177,10 +188,10 @@ def grasslandAssessmentResult(request):
     list_for_result = list()
     for row in everything:
         total_organic_n = row.organicN
-        total_organic_p = row.organicP 
+        total_organic_p = row.organicP
         total_land_area = row.total_land_area
         total_grass_area = row.total_grass_area
-    
+
         gsr = total_organic_n / total_grass_area
         wfsr = total_organic_n / total_land_area
         

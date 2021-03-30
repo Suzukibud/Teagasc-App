@@ -4,7 +4,7 @@
     {% block body %}
         <form action = "/conductGrasslandAssessment" method="POST" class="formindent">
             {% csrf_token %}
-            <table>
+            <table border=1>
                 {{ form }}
             </table>
             <input type="submit" value="Submit" class="my-button">

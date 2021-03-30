@@ -3,10 +3,12 @@
     {% block body %}
         <form action = "/conductGrasslandAssessment2" method="POST" class="formindent">
             {% csrf_token %}
-            <table>
-                {{ form }}
+            <table border=1>
+                {{ form }} 
             </table>
-            <input type = 'submit' value="Submit">
-            <input type = 'reset' value="Clear">
+            <div id="button_wrapper">
+                <input type = 'submit' value="Submit">
+                <input type = 'reset' value="Clear">
+            </div>
         </form>
     {% endblock %}

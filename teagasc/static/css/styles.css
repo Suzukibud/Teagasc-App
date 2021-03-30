@@ -25,20 +25,18 @@ li a:hover:not(.active){
     align-items: center;
 }
 
-.formindent {
-    margin-left: 12%;    
+form {
+    padding-top: 3%;
 }
 
 td {
     height: 50px;
-    width: 50px;
+    border-color:rgba(50,50,50,0.3);
 }
 
 #cssTable td {
     text-align: center;
-    vertical-align: top;
-    padding-top: 0%;
-    padding-left: 5%;
+    padding: 1%;
 }
 
 body {
@@ -48,7 +46,6 @@ body {
 }
 
 .formclass .my-button {
-    
     color: red;
     background: #f00;
 }
@@ -58,8 +55,51 @@ input.button:hover {
     color: indigo;
 }
 
+input[type=text]:focus-within {
+    border: 3px solid rgba(140,216,140,0.8);
+    outline:none;
+}
+
+select:focus-within {
+    border: 3px solid rgba(140,216,140,0.8);
+    outline:none;
+}
+
 input[type=submit] {
-    width: 80px;
-    height: 40px;
+    padding:0.2%;
     color: purple;
+}
+
+input[type=reset] {
+    padding:0.2%;
+}
+
+input[type=text] {
+    border: none;
+    height: 100%;
+    width:100%;
+    padding:6%;
+}
+
+#button_wrapper {
+    margin-top:2.3%;
+}
+
+th {
+    text-align: left;
+    padding:1%;
+    border-color:rgba(50,50,50,0.3);
+}
+
+select {
+    width:100%;
+    height:100%;
+    -webkit-appearance: none;
+    border:none;
+    background-color: white;
+}
+
+table {
+    margin: 0 auto;
+    border-color:rgba(50,50,50,0.3);
 }

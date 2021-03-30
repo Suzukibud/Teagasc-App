@@ -3,7 +3,13 @@
     {% block body %}
         <form action = "/conductGrasslandAssessment4" method="POST" id="cssTable">
             {% csrf_token %}
-            <table border="1" id="table">
+            <style>
+                th {
+                    text-align: center !important;
+                }
+            </style>
+
+            <table border="1" >
                 <tr>
                    <th scope="col">Type of Feed</th>
                    <th scope="col">Feed Name</th>
@@ -16,10 +22,11 @@
                    <td>{{ task.feed_name }}</td>
                    <td>{{ task.kg_per_tonne_fed }}</td>
                    <td>{{ field }}</td>
-                   <br>
                </tr>
                {% endfor %}
         </table>
-            <input type = 'submit' value="Submit">
+            <div id="button_wrapper">
+                <input type = 'submit' value="Submit">
+            </div>
         </form>
     {% endblock %}
