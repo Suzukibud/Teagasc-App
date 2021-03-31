@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% load static %}
+
+    {% block body %}
+        <form action = "/importExport" method="POST" class="formindent">
+            {% csrf_token %}
+            <h1> IMports Exports PAge</h1>
+            <div id="button_wrapper">
+                <input type = 'submit' value="Submit">
+                <input type = 'reset' value="Clear">
+            </div>
+        </form>
+    {% endblock %}

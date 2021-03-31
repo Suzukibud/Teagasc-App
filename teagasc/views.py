@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.template.response import TemplateResponse
 from teagasc.models import Farmer,Grassland,counties, Monthly_Livestock_Numbers, Farmer_Livestock, Farmer_Feed, Feed_Types
-from teagasc.forms import GrasslandForm,Grassland2,Grassland3, Grassland4, Grassland5
+from teagasc.forms import GrasslandForm,Grassland2,Grassland3, Grassland4, Grassland5, import_Export
 from django.views.decorators.csrf import csrf_protect
 from datetime import datetime
 from dateutil.parser import parse
@@ -198,6 +198,16 @@ def grasslandAssessmentResult(request):
         list_for_result.append((total_organic_n,total_organic_p, total_land_area, round(gsr,2), round(wfsr,2)))
 
     return render(request, "grasslandReport.html", {'list_for_result':list_for_result})
+
+
+@csrf_protect
+def importExport(request):
+    # if request.method=="POST":
+    #     form = import_Export(request.POST) 
+
+    #     farmer = Farmer.objects.get(id = request.session.get("farmer_id"))
+    return render(request,"importExport.html")
+
 
 # Create your views here.
 ## expiry_date = form["expiry_date"].value(),

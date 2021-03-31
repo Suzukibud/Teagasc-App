@@ -67,6 +67,14 @@ class Grassland5(forms.Form):
     number_horse1 = forms.IntegerField(widget = forms.TextInput(attrs={ "class":"formclass"}),initial=0)
     number_horse2 = forms.IntegerField(widget = forms.TextInput(attrs={ "class":"formclass"}),initial=0)
 
+class import_Export(forms.Form):
+    CHOICES = (( 1, 'Import'), (2,'Export'))
+    option = forms.ChoiceField(choices = CHOICES)
+    farmyard_manure = forms.FloatField(widget = forms.TextInput(attrs={ "class":"formclass"}))
+    slurry = forms.FloatField(widget = forms.TextInput(attrs={ "class":"formclass"}))
+
+
+
     def clean(self):
         cleaned_data = super(GrasslandForm, self).clean()
         cleaned_data1 = super(Grassland2, self).clean()
