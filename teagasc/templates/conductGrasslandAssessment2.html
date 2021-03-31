@@ -1,10 +1,48 @@
 {% extends "base.html" %}
 
     {% block body %}
-        <form action = "/conductGrasslandAssessment2" method="POST" class="formindent">
+        <style>
+            .invalid {
+                border: 3px solid red !important;
+            }
+        </style>
+        <script>
+            window.onload = function validate_field() {
+                var rows = document.getElementById("land_table").rows;
+                for(let i=0; i<rows.length;i++) {
+                    var isInt = (x) => {
+                        return !isNaN(x) && !isNaN(parseInt(x));
+                    };
+                    rows[i].children[1].children[0].onkeyup = () => {
+                        let element = rows[i].children[1].children[0];
+                        if(!isInt(element.value)) {
+                            element.classList.add("invalid")
+                        }
+                        else {
+                            element.classList.remove("invalid");
+                        }
+                    }
+                }
+            }
+
+            function valid_fields() {
+                var valid = true;
+                var rows = document.getElementById("land_table").rows;
+                for(let i=0; i<rows.length;i++) {
+                    if(rows[i].children[1].children[0].classList.contains("invalid"))
+                    {
+                        valid = false;
+                        break;
+                    }
+                }
+                return valid;
+            }
+        </script>
+
+        <form action = "/conductGrasslandAssessment2" method="POST" onsubmit="return valid_fields()" class="formindent">
             {% csrf_token %}
-            <table border=1>
-                {{ form }} 
+            <table border=1 id="land_table" onload="validate_field()">
+                {{ form }}
             </table>
             <div id="button_wrapper">
                 <input type = 'submit' value="Submit">

@@ -32,11 +32,20 @@ form {
 td {
     height: 50px;
     border-color:rgba(50,50,50,0.3);
+    text-align: center;
 }
 
-#cssTable td {
+#cssTable td th {
     text-align: center;
     padding: 1%;
+    
+}
+
+#lTable {
+    width: 85%;
+    margin: 0 auto;
+    border-color:rgba(50,50,50,0.3);
+    
 }
 
 body {

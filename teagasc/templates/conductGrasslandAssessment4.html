@@ -1,6 +1,30 @@
 {% extends "base.html" %}
 
     {% block body %}
+        <style>
+            #search {
+                width:auto;
+                height:auto;
+                padding: 2%;
+                border:2px solid rgba(50,50,50,0.3);
+                margin-top:3%;
+            }
+        </style>
+
+        <script>
+            function search_table() {
+                var search_term = document.getElementById("search").value.toLowerCase();
+
+                var r = document.getElementById("feed_table").rows;
+                for(let i=1;i<r.length;i++)
+                {
+                    r[i].style.display = r[i].children[1].innerHTML.toLowerCase().indexOf(search_term) !== -1 ? "" : "none"; 
+                }
+            }
+        </script>
+
+        <input type="text" id="search" onkeyup="search_table()" placeholder="Search Feed">
+
         <form action = "/conductGrasslandAssessment4" method="POST" id="cssTable">
             {% csrf_token %}
             <style>
@@ -9,7 +33,7 @@
                 }
             </style>
 
-            <table border="1" >
+            <table border="1" id="feed_table">
                 <tr>
                    <th scope="col">Type of Feed</th>
                    <th scope="col">Feed Name</th>
@@ -25,8 +49,9 @@
                </tr>
                {% endfor %}
         </table>
-            <div id="button_wrapper">
-                <input type = 'submit' value="Submit">
-            </div>
+        <div id="button_wrapper">
+            <input type = 'submit' value="Submit">
+            <input type = 'reset' value="Clear">
+        </div>
         </form>
     {% endblock %}

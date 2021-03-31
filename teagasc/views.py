@@ -45,21 +45,21 @@ def record5_calculations(owned,rented,time):
 def conductGrasslandAssessment2(request):
     if request.method=="POST":
         form = Grassland2(request.POST)
+        if form.is_valid():
+            farmer = Farmer.objects.get(id = request.session.get("farmer_id"))
+            landInfo = Grassland(farmer_id = farmer, owned_land = (owned := float(form["owned_land"].value())),
+            rented_land = (rented := float(form["rented_land"].value())),
+            time_rented = (time_r := int(form["time_rented"].value())),
+            total_tillage_area = (tillage := float(form["total_tillage_area"].value())), 
+            area_reseeded = float(form["area_reseeded"].value()),
+            total_grass_area = (area := record5_calculations(owned,rented,time_r)),
+            total_land_area = area + tillage)
+            landInfo.save()
+            request.session["grassland_id"] = landInfo.id
+            return redirect("/conductGrasslandAssessment5")
+        else:
+            return render(request, "conductGrasslandAssessment2.html", {'form':Grassland2()})
 
-        farmer = Farmer.objects.get(id = request.session.get("farmer_id"))
-
-        landInfo = Grassland(farmer_id = farmer, owned_land = (owned := float(form["owned_land"].value())),
-        rented_land = (rented := float(form["rented_land"].value())),
-        time_rented = (time_r := int(form["time_rented"].value())),
-        total_tillage_area = (tillage := float(form["total_tillage_area"].value())), 
-        area_reseeded = float(form["area_reseeded"].value()),
-        total_grass_area = (area := record5_calculations(owned,rented,time_r)),
-        total_land_area = area + tillage)
-        landInfo.save()
-
-        request.session["grassland_id"] = landInfo.id
-
-        return redirect("/conductGrasslandAssessment3")
     return render(request, "conductGrasslandAssessment2.html", {'form':Grassland2()})
 
 @csrf_protect
