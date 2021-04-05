@@ -68,12 +68,11 @@ class Grassland5(forms.Form):
     number_horse2 = forms.IntegerField(widget = forms.TextInput(attrs={ "class":"formclass"}),initial=0)
 
 class import_Export(forms.Form):
-    CHOICES = (( 1, 'Import'), (2,'Export'))
+    CHOICES = (( "Import", 'Import'), ("Export",'Export'))
     option = forms.ChoiceField(choices = CHOICES)
+    farmer_name = forms.CharField(widget= forms.TextInput(attrs={"autocomplete":"off","list":"farmers"}))
     farmyard_manure = forms.FloatField(widget = forms.TextInput(attrs={ "class":"formclass"}))
     slurry = forms.FloatField(widget = forms.TextInput(attrs={ "class":"formclass"}))
-
-
 
     def clean(self):
         cleaned_data = super(GrasslandForm, self).clean()

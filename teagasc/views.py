@@ -1,7 +1,9 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.template.response import TemplateResponse
-from teagasc.models import Farmer,Grassland,counties, Monthly_Livestock_Numbers, Farmer_Livestock, Farmer_Feed, Feed_Types
+from teagasc.models import (Farmer,Grassland,counties,
+Monthly_Livestock_Numbers, Farmer_Livestock, 
+Farmer_Feed, Feed_Types, Importation, Exportation)
 from teagasc.forms import GrasslandForm,Grassland2,Grassland3, Grassland4, Grassland5, import_Export
 from django.views.decorators.csrf import csrf_protect
 from datetime import datetime
@@ -185,7 +187,8 @@ def conductGrasslandAssessment5(request):
 @csrf_protect
 def grasslandAssessmentResult(request):
     everything = Grassland.objects.filter(farmer_id = request.session.get("farmer_id"))
-    list_for_result = list()
+    list_for_result = []
+    objects_to_update = []
     for row in everything:
         total_organic_n = row.organicN
         total_organic_p = row.organicP
@@ -194,20 +197,53 @@ def grasslandAssessmentResult(request):
 
         gsr = total_organic_n / total_grass_area
         wfsr = total_organic_n / total_land_area
-        
-        list_for_result.append((total_organic_n,total_organic_p, total_land_area, round(gsr,2), round(wfsr,2)))
 
+        row.grassland_stocking_rate = gsr
+        row.wholefarm_stocking_rate = wfsr
+        objects_to_update.append(row)
+        list_for_result.append((total_organic_n,total_organic_p, total_land_area, round(gsr,2), round(wfsr,2)))
+    
+    # The objects_to_update list will these columns in the database 
+    Grassland.objects.bulk_update(objects_to_update,["grassland_stocking_rate","wholefarm_stocking_rate"])
+    Farmer.objects.filter(id = request.session.get("farmer_id")).update(is_assessed=True)
     return render(request, "grasslandReport.html", {'list_for_result':list_for_result})
 
 
 @csrf_protect
 def importExport(request):
-    # if request.method=="POST":
-    #     form = import_Export(request.POST) 
+    if request.method=="POST":
+        form = import_Export(request.POST) 
+        try:
+            farmer_name = form["farmer_name"].value()
+            herd_no = farmer_name.split("-")[1].strip()
+            farmer = Farmer.objects.get(herd_no=herd_no)
+            if farmer == None:
+                raise Exception()
+            request.session["farmer_id"] = farmer.id
+        except:
+            farmer_list = Farmer.objects.filter(is_assessed = True)
+            farmer_list = [f"{farmer.name} - {farmer.herd_no}" for farmer in farmer_list]
+            return render(request, "importExport.html", {'form':import_Export, 'farmer_list':farmer_list})
 
-    #     farmer = Farmer.objects.get(id = request.session.get("farmer_id"))
-    return render(request,"importExport.html")
+        # grass = Grassland.objects.get(id = request.session.get("grassland_id"))
+        # farmer = Farmer.objects.get(id = request.session.get("farmer_id"))
+        
+        if form["option"].value() == "Import":
+            farmer_import = Importation(20,
+            farmyard_manure = (manure := int(form["farmyard_manure"].value())), 
+            slurry = (slurry := int(form["slurry"].value())))
+            farmer_import.save()
 
+        elif form["option"].value() == "Export":
+            farmer_export = Exportation(10, 
+            farmyard_manure = (manure := int(form["farmyard_manure"].value())), 
+            slurry = (slurry := int(form["slurry"].value())))
+            farmer_export.save()
+            
+        return redirect("/home")
+    farmer_list = Farmer.objects.filter(is_assessed = True)
+    farmer_list = [f"{farmer.name} - {farmer.herd_no}" for farmer in farmer_list]
+    return render(request, "importExport.html", {'form':import_Export, 'farmer_list':farmer_list})
 
 # Create your views here.
 ## expiry_date = form["expiry_date"].value(),

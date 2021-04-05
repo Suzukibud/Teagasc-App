@@ -53,7 +53,8 @@ class Farmer(models.Model):
     address = models.CharField(max_length=30)
     county = models.CharField(max_length=30,choices=counties,null=True)
     date = models.DateField(null=True)
-    herd_no = models.CharField(max_length=30,null=True)
+    herd_no = models.CharField(max_length=30,null=True, unique = True)
+    is_assessed = models.IntegerField(null=True, default=0)
     
 
 class Grassland(models.Model):
@@ -83,6 +84,7 @@ class Grassland(models.Model):
     feed_tonnage = models.CharField(max_length=30,null=True)
     number_of_animals = models.CharField(max_length=30,null=True)
     grassland_stocking_rate = models.FloatField(null=True)
+    wholefarm_stocking_rate = models.FloatField(null=True)
     soil_samples = models.CharField(max_length=30)
     reseeding = models.CharField(max_length=30)
     lime_required = models.FloatField(null=True)
@@ -96,10 +98,12 @@ class Grassland(models.Model):
 class Importation(models.Model):
     farmyard_manure = models.IntegerField(null=True)
     slurry = models.IntegerField(null=True)
+    # farmer_id = models.ForeignKey(Farmer, on_delete = models.CASCADE, default=1)
 
 class Exportation(models.Model):
     farmyard_manure = models.IntegerField(null=True)
     slurry = models.IntegerField(null=True)
+    # farmer_id = models.ForeignKey(Farmer, on_delete = models.CASCADE, default=1)
 
 class Monthly_Livestock_Numbers(models.Model):
     monthly_livestock_numbers = models.TextField(null=True)
