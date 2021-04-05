@@ -94,17 +94,12 @@ class Grassland(models.Model):
     legalP_limit = models.FloatField(null=True)
 
 class Importation(models.Model):
-    importation_original_stocking_rate = models.FloatField(null=True)
-    nitrates_and_potassium_figures = models.FloatField(null=True)
-    organic_manure_breakdown = models.FloatField(null=True)
-    exportation_details = models.CharField(max_length=30)
-    stocking_rate_including_import = models.FloatField(null=True)
+    farmyard_manure = models.IntegerField(null=True)
+    slurry = models.IntegerField(null=True)
 
 class Exportation(models.Model):
-    exportation_original_stocking_rate = models.FloatField(null=True)
-    export = models.FloatField(null=True)
-    person_accepting_import = models.CharField(max_length=30)
-    new_stocking_rate = models.FloatField(null=True)
+    farmyard_manure = models.IntegerField(null=True)
+    slurry = models.IntegerField(null=True)
 
 class Monthly_Livestock_Numbers(models.Model):
     monthly_livestock_numbers = models.TextField(null=True)
