@@ -225,11 +225,11 @@ def importExport(request):
             farmer_list = [f"{farmer.name} - {farmer.herd_no}" for farmer in farmer_list]
             return render(request, "importExport.html", {'form':import_Export, 'farmer_list':farmer_list})
 
-        # grass = Grassland.objects.get(id = request.session.get("grassland_id"))
-        # farmer = Farmer.objects.get(id = request.session.get("farmer_id"))
+        grass = Grassland.objects.get(id = request.session.get("grassland_id"))
+        farmer = Farmer.objects.get(id = request.session.get("farmer_id"))
         
         if form["option"].value() == "Import":
-            farmer_import = Importation(20,
+            farmer_import = Importation(20,farmer_id = farmer,
             farmyard_manure = (manure := int(form["farmyard_manure"].value())), 
             slurry = (slurry := int(form["slurry"].value())))
             farmer_import.save()
