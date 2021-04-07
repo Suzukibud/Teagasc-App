@@ -99,11 +99,15 @@ class Importation(models.Model):
     farmer_id = models.ForeignKey(Farmer, on_delete = models.CASCADE, default=1)
     farmyard_manure = models.IntegerField(null=True)
     slurry = models.IntegerField(null=True)
+    nitrates = models.IntegerField(null=True)
+    phosphate = models.IntegerField(null=True)
 
 class Exportation(models.Model):
     farmer_id = models.ForeignKey(Farmer, on_delete = models.CASCADE, default=1)
     farmyard_manure = models.IntegerField(null=True)
     slurry = models.IntegerField(null=True)
+    nitrates = models.IntegerField(null=True)
+    phosphate = models.IntegerField(null=True)
 
 class Monthly_Livestock_Numbers(models.Model):
     monthly_livestock_numbers = models.TextField(null=True)

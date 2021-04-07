@@ -23,6 +23,7 @@ urlpatterns = [
     path('',views.home,name='home'),
     path('home',views.home,name='home'),
     path('importExport',views.importExport,name='importExport'),
+    path('importExportReport',views.importExportReport,name='importExportReport'),
     path('conductGrasslandAssessment',views.conductGrasslandAssessment,name='conductGrasslandAssessment'),
     path('conductGrasslandAssessment2',views.conductGrasslandAssessment2,name='conductGrasslandAssessment2'),
     path('conductGrasslandAssessment3',views.conductGrasslandAssessment3,name='conductGrasslandAssessment3'),

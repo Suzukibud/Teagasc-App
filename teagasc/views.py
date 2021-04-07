@@ -225,26 +225,59 @@ def importExport(request):
             farmer_list = [f"{farmer.name} - {farmer.herd_no}" for farmer in farmer_list]
             return render(request, "importExport.html", {'form':import_Export, 'farmer_list':farmer_list})
 
-        grass = Grassland.objects.get(id = request.session.get("grassland_id"))
+        grass = Grassland.objects.get(farmer_id = request.session.get("farmer_id"))
         farmer = Farmer.objects.get(id = request.session.get("farmer_id"))
-        
+
+        total_n = grass.organicN
+        area = grass.total_land_area
+
         if form["option"].value() == "Import":
-            farmer_import = Importation(20,farmer_id = farmer,
+            farmer_import = Importation(farmer_id = farmer,
             farmyard_manure = (manure := int(form["farmyard_manure"].value())), 
-            slurry = (slurry := int(form["slurry"].value())))
+            slurry = (slurry := int(form["slurry"].value())),
+            nitrates = (nit := int((slurry * 5) + manure * 4.5)))
+            total_n += nit
+            grass.organicN = total_n
+            orgN = grass.organicN
+            orgN / area
             farmer_import.save()
+            grass.save()
 
         elif form["option"].value() == "Export":
-            farmer_export = Exportation(10, 
+            farmer_export = Exportation(farmer_id = farmer,
             farmyard_manure = (manure := int(form["farmyard_manure"].value())), 
-            slurry = (slurry := int(form["slurry"].value())))
+            slurry = (slurry := int(form["slurry"].value())),
+            nitrates = (nit := int((slurry * 5) + manure * 4.5)))
+            total_n -= nit
+            grass.organicN = total_n
+            orgN = grass.organicN
+            orgN / area
+            grass.save()
             farmer_export.save()
             
-        return redirect("/home")
+        return redirect("/importExportReport")
     farmer_list = Farmer.objects.filter(is_assessed = True)
     farmer_list = [f"{farmer.name} - {farmer.herd_no}" for farmer in farmer_list]
     return render(request, "importExport.html", {'form':import_Export, 'farmer_list':farmer_list})
 
-# Create your views here.
-## expiry_date = form["expiry_date"].value(),
-#   k_index = form["k_index"].value()
+@csrf_protect
+def importExportReport(request):
+    everything = Grassland.objects.filter(farmer_id = request.session.get("farmer_id"))
+    list_for_result = []
+    objects_to_update = []
+    for row in everything:
+        total_organic_n = row.organicN
+        total_organic_p = row.organicP
+        total_land_area = row.total_land_area
+
+        gsr = row.grassland_stocking_rate
+        wfsr = total_organic_n / total_land_area
+
+        row.wholefarm_stocking_rate = wfsr
+        objects_to_update.append(row)
+        list_for_result.append((total_organic_n,total_organic_p, total_land_area, round(gsr,2), round(wfsr,2)))
+    
+    # The objects_to_update list will these columns in the database 
+    Grassland.objects.bulk_update(objects_to_update,["grassland_stocking_rate","wholefarm_stocking_rate"])
+    Farmer.objects.filter(id = request.session.get("farmer_id")).update(is_assessed=True)
+    return render(request, "importExportReport.html", {'list_for_result':list_for_result})   
