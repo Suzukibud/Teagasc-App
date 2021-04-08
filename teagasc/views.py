@@ -163,7 +163,7 @@ def conductGrasslandAssessment5(request):
             num12
         ]
         total_nitrates = 0
-        grass.number_of_animals = (total := (num1 + num2 + num3 + num4 + num5 + num6 + num7 + num8 + num9 + num10 + num11 + num12))
+        grass.number_of_animals = (total := (sum(animal_list)))
         nitrate_results = Monthly_Livestock_Numbers.objects.values_list('organic_nitrates', flat=True)
         for a, b in zip(animal_list, nitrate_results):
             total_nitrates += a * b
@@ -174,6 +174,13 @@ def conductGrasslandAssessment5(request):
         for c,d in zip(animal_list,potass_results):
             total_potassium += c * d
         grass.organicP = total_potassium
+
+        total_lsu = 0
+        lsu_vals = Monthly_Livestock_Numbers.objects.values_list('lsu', flat = True)
+        for a,b in zip(animal_list, lsu_vals):
+            total_lsu += a * b
+        grass.lsu = total_lsu
+        
         
         num_of_stock.save()
         grass.save()
@@ -194,6 +201,7 @@ def grasslandAssessmentResult(request):
         total_organic_p = row.organicP
         total_land_area = row.total_land_area
         total_grass_area = row.total_grass_area
+        total_lsu = row.lsu
 
         gsr = total_organic_n / total_grass_area
         wfsr = total_organic_n / total_land_area
@@ -201,7 +209,7 @@ def grasslandAssessmentResult(request):
         row.grassland_stocking_rate = gsr
         row.wholefarm_stocking_rate = wfsr
         objects_to_update.append(row)
-        list_for_result.append((total_organic_n,total_organic_p, total_land_area, round(gsr,2), round(wfsr,2)))
+        list_for_result.append((total_organic_n,total_organic_p, total_land_area, round(gsr,2), round(wfsr,2), round(total_lsu,2)))
     
     # The objects_to_update list will these columns in the database 
     Grassland.objects.bulk_update(objects_to_update,["grassland_stocking_rate","wholefarm_stocking_rate"])

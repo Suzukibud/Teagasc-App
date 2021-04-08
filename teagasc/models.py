@@ -94,6 +94,7 @@ class Grassland(models.Model):
     concentrateFed = models.FloatField(null=True)
     legalN_limit = models.FloatField(null=True)
     legalP_limit = models.FloatField(null=True)
+    lsu = models.FloatField(null=True)
 
 class Importation(models.Model):
     farmer_id = models.ForeignKey(Farmer, on_delete = models.CASCADE, default=1)
@@ -114,6 +115,7 @@ class Monthly_Livestock_Numbers(models.Model):
     type_of_animal = models.CharField(max_length=30)
     organic_nitrates = models.FloatField(null=True)
     organic_potassium = models.FloatField(null=True)
+    lsu = models.FloatField(null=True)
 
 class Tillage(models.Model):
     tillage_year = models.DateTimeField(null=True)
