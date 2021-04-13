@@ -74,12 +74,26 @@ class import_Export(forms.Form):
     farmyard_manure = forms.FloatField(widget = forms.TextInput(attrs={ "class":"formclass"}))
     slurry = forms.FloatField(widget = forms.TextInput(attrs={ "class":"formclass"}))
 
+class storage(forms.Form):
+    TYPE = (("Slurry", "Slurry"), ("Farmyard Manure", "Farmyard Manure"))
+    choice = forms.ChoiceField(choices = TYPE)
+    CHOICES = (( "Indoor", 'Indoor'), ("Outdoor",'Outdoor'))
+    option = forms.ChoiceField(choices = CHOICES)
+    num_containers = forms.IntegerField(widget = forms.TextInput(attrs={ "class":"formclass"}),initial=0)
+    zone = forms.CharField(widget = forms.TextInput(attrs={ "class":"formclass"}))
+    length = forms.FloatField(widget = forms.TextInput(attrs={ "class":"formclass"}))
+    breadth = forms.FloatField(widget = forms.TextInput(attrs={ "class":"formclass"}))
+    height = forms.FloatField(widget = forms.TextInput(attrs={ "class":"formclass"}))
+    add_another_container = forms.BooleanField(required=False)
+
+
     def clean(self):
         cleaned_data = super(GrasslandForm, self).clean()
         cleaned_data1 = super(Grassland2, self).clean()
         cleaned_data2 = super(Grassland3, self).clean()
         cleaned_data3 = super(Grassland4, self).clean()
         cleaned_data4 = super(Grassland5, self).clean()
+        cleaned_data5 = super(storage, self).clean()
         name = cleaned_data.get('farmer_name')
         farmer_email = cleaned_data.get('farmer_email')
         farmer_address_line_1 = cleaned_data.get('farmer_address_line_1')

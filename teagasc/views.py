@@ -2,12 +2,14 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.template.response import TemplateResponse
 from teagasc.models import (Farmer,Grassland,counties,
-Monthly_Livestock_Numbers, Farmer_Livestock, 
+Monthly_Livestock_Numbers, Farmer_Livestock, Slurry_Storage,
 Farmer_Feed, Feed_Types, Importation, Exportation)
-from teagasc.forms import GrasslandForm,Grassland2,Grassland3, Grassland4, Grassland5, import_Export
+from teagasc.forms import (GrasslandForm,Grassland2,
+Grassland3, Grassland4, Grassland5, import_Export, storage)
 from django.views.decorators.csrf import csrf_protect
 from datetime import datetime
 from dateutil.parser import parse
+from django.forms.models import model_to_dict
 import ipdb
 
 
@@ -277,15 +279,53 @@ def importExportReport(request):
         total_organic_n = row.organicN
         total_organic_p = row.organicP
         total_land_area = row.total_land_area
+        total_lsu = row.lsu
 
         gsr = row.grassland_stocking_rate
         wfsr = total_organic_n / total_land_area
 
         row.wholefarm_stocking_rate = wfsr
         objects_to_update.append(row)
-        list_for_result.append((total_organic_n,total_organic_p, total_land_area, round(gsr,2), round(wfsr,2)))
+        list_for_result.append((total_organic_n,total_organic_p, total_land_area, round(gsr,2), round(wfsr,2), round(total_lsu,2)))
     
     # The objects_to_update list will these columns in the database 
     Grassland.objects.bulk_update(objects_to_update,["grassland_stocking_rate","wholefarm_stocking_rate"])
     Farmer.objects.filter(id = request.session.get("farmer_id")).update(is_assessed=True)
     return render(request, "importExportReport.html", {'list_for_result':list_for_result})   
+
+@csrf_protect
+def storage_process(request):
+    if request.method=="POST":
+        form = storage(request.POST)
+        farmer = Farmer.objects.get(id = request.session.get("farmer_id"))
+        storage_form = Slurry_Storage(farmer_id = farmer,
+            zone = form['zone'].value(), length = form['length'].value(),
+            breadth = form['breadth'].value(), height = form['height'].value())
+##storage_form
+## total fig 
+## total slurry from nitrates multiply by Stat 102.d
+
+        if form['add_another_container'].value():
+            if "Storagelist" in request.session:
+                request.session["Storagelist"].append(model_to_dict(storage_form))
+                request.session.modified = True
+            else:
+                request.session["Storagelist"] = [model_to_dict(storage_form)]  
+            return render(request, "storage.html", {'form':storage})
+        else:
+            if "Storagelist" in request.session:
+                request.session["Storagelist"].append(model_to_dict(storage_form))
+                storage_list = []
+                for shed in request.session["Storagelist"]:
+                    storage_form = Slurry_Storage(farmer_id = farmer,
+                        zone = shed['zone'], length = shed['length'],
+                        breadth = shed['breadth'], height = shed['height'])
+                    storage_list.append(storage_form)
+                del request.session["Storagelist"]
+                Slurry_Storage.objects.bulk_create(storage_list)
+            else:
+                storage_form.save()
+            return redirect('home')
+
+    return render(request, "storage.html", 
+    {'form':storage})

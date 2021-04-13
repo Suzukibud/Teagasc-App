@@ -30,4 +30,5 @@ urlpatterns = [
     path('conductGrasslandAssessment4',views.conductGrasslandAssessment4,name='conductGrasslandAssessment4'),
     path('conductGrasslandAssessment5',views.conductGrasslandAssessment5,name='conductGrasslandAssessment5'),
     path('grasslandReport',views.grasslandAssessmentResult,name='grasslandAssessmentResult'),
+    path('storage',views.storage_process,name='storage'),
 ]

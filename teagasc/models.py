@@ -138,13 +138,15 @@ class Fertilzer_Plan(models.Model):
     legally_allowed_phospheros = models.FloatField(null=True)
 
 class Slurry_Storage(models.Model):
-    storage_facility = models.CharField(max_length=30)
-    location = models.CharField(max_length=30)
-    number_of_tanks = models.FloatField(null=True)
-    type_of_tank = models.CharField(max_length=30)
-    tank_dimensions = models.FloatField(null=True)
-    tank_capacity = models.FloatField(null=True)
-    enough_storage = models.FloatField(null=True)
+    farmer_id = models.ForeignKey(Farmer, on_delete = models.CASCADE, default=1)
+    length = models.FloatField(null=True)
+    breadth = models.FloatField(null=True)
+    height = models.FloatField(null=True)
+    zone = models.IntegerField(null=True)
+    total_slurry_manure = models.FloatField(null=True)
+    total_storage = models.FloatField(null=True)
+    rainfall = models.FloatField(null=True)
+    num_containers = models.IntegerField(null=True)
 
 class Farm_Records(models.Model):
     farm_records_year = models.DateTimeField(null=True)
