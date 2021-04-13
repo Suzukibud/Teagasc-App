@@ -79,8 +79,6 @@ class storage(forms.Form):
     choice = forms.ChoiceField(choices = TYPE)
     CHOICES = (( "Indoor", 'Indoor'), ("Outdoor",'Outdoor'))
     option = forms.ChoiceField(choices = CHOICES)
-    num_containers = forms.IntegerField(widget = forms.TextInput(attrs={ "class":"formclass"}),initial=0)
-    zone = forms.CharField(widget = forms.TextInput(attrs={ "class":"formclass"}))
     length = forms.FloatField(widget = forms.TextInput(attrs={ "class":"formclass"}))
     breadth = forms.FloatField(widget = forms.TextInput(attrs={ "class":"formclass"}))
     height = forms.FloatField(widget = forms.TextInput(attrs={ "class":"formclass"}))

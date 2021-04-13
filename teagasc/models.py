@@ -3,32 +3,61 @@ from django.contrib.auth.models import User
 # User already defined in built in app named auth
 
 counties = [
-    ('24','Carlow'),
-    ('27','Cavan'),
-    ('32','Clare'),
-    ('37','Cork'),
-    ('38','Donegal'),
-    ('17','Dublin'),
-    ('34','Galway'),
-    ('45','Kerry'),
-    ('18','Kildare'),
-    ('23','Kilkenny'),
-    ('22','Laois'),
-    ('33','Leitrim'),
-    ('26','Limerick'),
-    ('23','Longford'),
-    ('20','Louth'),
-    ('40','Mayo'),
-    ('19','Meath'),
-    ('23','Monaghan'),
-    ('20','Offaly'),
-    ('26','Roscommon'),
-    ('32','Sligo'),
-    ('27','Tipperary'),
-    ('31','Waterford'),
-    ('21','Westmeath'),
-    ('25','Wexford'),
-    ('33','Wicklow')]
+    ('carlow','Carlow'),
+    ('cavan','Cavan'),
+    ('clare','Clare'),
+    ('cork','Cork'),
+    ('donegal','Donegal'),
+    ('dublin','Dublin'),
+    ('galway','Galway'),
+    ('kerry','Kerry'),
+    ('kildare','Kildare'),
+    ('kilkenny','Kilkenny'),
+    ('laois','Laois'),
+    ('leitrim','Leitrim'),
+    ('limerick','Limerick'),
+    ('longford','Longford'),
+    ('louth','Louth'),
+    ('mayo','Mayo'),
+    ('meath','Meath'),
+    ('monaghan','Monaghan'),
+    ('offaly','Offaly'),
+    ('roscommon','Roscommon'),
+    ('sligo','Sligo'),
+    ('tipperary','Tipperary'),
+    ('waterford','Waterford'),
+    ('westmeath','Westmeath'),
+    ('wexford','Wexford'),
+    ('wicklow','Wicklow')]
+
+counties_with_attrs = {
+    "carlow": ('Carlow',0.024,"a",16),
+    "cavan" : ('Cavan',0.027,"d",22),
+    "clare" : ('Clare',0.032,"b",18),
+    "Cork" : ('Cork',0.037,"a",16),
+    "Donegal" : ('Donegal',0.038,"c",20),
+    "Dublin" : ('Dublin',0.017,"a",16),
+    "Galway" : ('Galway',0.034,"b",18),
+    "Kerry" : ('Kerry',0.045,"b",18),
+    "Kildare" : ('Kildare',0.018,"a",16),
+    "Kilkenny" : ('Kilkenny',0.023,"a",16),
+    "Laois" : ('Laois',0.022,"a",16),
+    "Leitrim" : ('Leitrim',0.033,"c",20),
+    "Limerick" : ('Limerick',0.026,"b",18),
+    "Longford" : ('Longford',0.023,"b",18),
+    "Louth" : ('Louth',0.020,"b",18),
+    "Mayo" : ('Mayo',0.040,"b",18),
+    "Meath" : ('Meath',0.019,"b",18),
+    "Monaghan" : ('Monaghan',0.023,"d",22),
+    "Offaly" : ('Offaly',0.020,"a",16),
+    "Roscommon" : ('Roscommon',26,"b",18),
+    "Sligo" : ('Sligo',0.032,"b",18),
+    "Tipperary" : ('Tipperary',0.027,"a",16),
+    "Waterford" : ('Waterford',0.031,"a",16),
+    "Westmeath" : ('Westmeath',0.021,"b",18),
+    "Wexford" : ('Wexford',0.025,"a",16),
+    "Wicklow" : ('Wicklow',0.033,"a",16)
+}
 
 feed_types = [
     ('1','straight'),
@@ -55,8 +84,8 @@ class Farmer(models.Model):
     date = models.DateField(null=True)
     herd_no = models.CharField(max_length=30,null=True, unique = True)
     is_assessed = models.IntegerField(null=True, default=0)
+    zone = models.CharField(max_length=30)
     
-
 class Grassland(models.Model):
     farmer_id = models.ForeignKey(Farmer, on_delete = models.CASCADE, default=1)
     owned_land = models.FloatField(null=True)
@@ -116,6 +145,9 @@ class Monthly_Livestock_Numbers(models.Model):
     organic_nitrates = models.FloatField(null=True)
     organic_potassium = models.FloatField(null=True)
     lsu = models.FloatField(null=True)
+    slurry_m3 = models.FloatField(null=True)
+    manure_m3 = models.FloatField(null=True)
+    
 
 class Tillage(models.Model):
     tillage_year = models.DateTimeField(null=True)
@@ -142,11 +174,11 @@ class Slurry_Storage(models.Model):
     length = models.FloatField(null=True)
     breadth = models.FloatField(null=True)
     height = models.FloatField(null=True)
-    zone = models.IntegerField(null=True)
     total_slurry_manure = models.FloatField(null=True)
     total_storage = models.FloatField(null=True)
     rainfall = models.FloatField(null=True)
     num_containers = models.IntegerField(null=True)
+    
 
 class Farm_Records(models.Model):
     farm_records_year = models.DateTimeField(null=True)

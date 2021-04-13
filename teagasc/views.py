@@ -3,6 +3,7 @@ from django.http import HttpResponse
 from django.template.response import TemplateResponse
 from teagasc.models import (Farmer,Grassland,counties,
 Monthly_Livestock_Numbers, Farmer_Livestock, Slurry_Storage,
+counties_with_attrs,
 Farmer_Feed, Feed_Types, Importation, Exportation)
 from teagasc.forms import (GrasslandForm,Grassland2,
 Grassland3, Grassland4, Grassland5, import_Export, storage)
@@ -29,6 +30,9 @@ def conductGrasslandAssessment(request):
          + " " + form["farmer_address_line_3"].value(),
         date = parse(form["date"].value(), dayfirst = True).strftime("%Y-%m-%d"), 
         county = form["county"].value(), herd_no = form["herd_no"].value())
+        # if county in counties_with_attrs:
+        values = counties_with_attrs.get(form["county"].value().lower())
+
 
         farmer.save()
         request.session["farmer_id"] = farmer.id
@@ -297,14 +301,77 @@ def importExportReport(request):
 def storage_process(request):
     if request.method=="POST":
         form = storage(request.POST)
-        farmer = Farmer.objects.get(id = request.session.get("farmer_id"))
-        storage_form = Slurry_Storage(farmer_id = farmer,
-            zone = form['zone'].value(), length = form['length'].value(),
-            breadth = form['breadth'].value(), height = form['height'].value())
-##storage_form
-## total fig 
-## total slurry from nitrates multiply by Stat 102.d
+        county_val = Farmer.objects.get(id = request.session.get("farmer_id")).county.lower()
+        rainfall_val = float(counties_with_attrs[county_val][1])
+        total_weeks = float(counties_with_attrs[county_val][3])
+        num_animals = Farmer_Livestock.objects.get(id = request.session.get("farmer_id"))
+        num_animals = model_to_dict(num_animals)
+        num_animals.pop('id')
+        num_animals.pop('farmer_id')
+        num_animals = dict(num_animals).values()
+        slurry_vals = list(Monthly_Livestock_Numbers.objects.values_list('slurry_m3', flat=True))
+        manure_vals = list(Monthly_Livestock_Numbers.objects.values_list('manure_m3', flat=True))
+        breakpoint()
 
+        if form["choice"].value() == storage.TYPE[0][0]:
+            manure = sum((a*b for (a,b) in zip(num_animals,slurry_vals)))
+            lengt = (leng := float(form['length'].value()))
+            lengt -= 0.3
+            bread = (breth := float(form['breadth'].value())) 
+            heigh = (hight := float(form["height"].value()))
+            req_storage = manure * total_weeks
+
+            if form["option"].value() == storage.CHOICES[0][0]:
+                total_storage = lengt * bread * heigh
+                space_available = req_storage - total_storage
+            
+            elif form["option"].value() == storage.CHOICES[1][0]:
+                total_storage = lengt * bread * heigh
+                deduction = rainfall_val * total_weeks
+                deduction = round(deduction,2)
+                total_storage -= deduction
+                space_available = req_storage - total_storage
+
+        elif form["choice"].value() == storage.TYPE[1][0]:
+            manure = sum((a*b for (a,b) in zip(num_animals,manure_vals)))
+            lengt = (leng := float(form['length'].value()))
+            bread = (breth := float(form['breadth'].value())) 
+            heigh = (hight := float(form["height"].value()))
+            req_storage = manure * total_weeks
+
+            if form["option"].value() == storage.CHOICES[0][0]:
+                total_storage = lengt * bread * heigh
+                space_available = req_storage - total_storage
+                
+            elif form["option"].value() == storage.CHOICES[1][0]:
+                total_storage = lengt * bread * heigh
+                deduction = rainfall_val * total_weeks
+                deduction = round(deduction,2)
+                total_storage -= deduction
+                space_available = req_storage - total_storage
+                space_available = round(space_available,2)
+                
+
+        manure = round(manure,2)
+        total_storage = round(total_storage,2)
+        req_storage = manure * total_weeks
+        space_available = req_storage - total_storage
+        farmer = Farmer.objects.get(id = request.session.get("farmer_id"))
+        try:
+            slurry_object = Slurry_Storage.objects.filter(
+                farmer_id_id = request.session.get("farmer_id")
+            ).latest("id")
+        except:
+            slurry_object = None
+        storage_form = Slurry_Storage(
+            farmer_id = farmer,
+            length = lengt,
+            breadth = bread, 
+            height = heigh,
+            rainfall = rainfall_val,
+            total_storage = total_storage,
+            total_slurry_manure = manure
+        )
         if form['add_another_container'].value():
             if "Storagelist" in request.session:
                 request.session["Storagelist"].append(model_to_dict(storage_form))
@@ -313,18 +380,24 @@ def storage_process(request):
                 request.session["Storagelist"] = [model_to_dict(storage_form)]  
             return render(request, "storage.html", {'form':storage})
         else:
+            save_list = request.session.get("Storagelist",[])
+            save_list.append(model_to_dict(storage_form))
+            inital = 0 if slurry_object == None else slurry_object.total_storage
+            storage_list = []
+            for shed in save_list:
+                storage_form = Slurry_Storage(
+                    farmer_id = farmer,
+                    length = shed['length'],
+                    rainfall = shed['rainfall'], 
+                    total_storage = shed['total_storage'],
+                    breadth = shed['breadth'],
+                    height = shed['height'],
+                    total_slurry_manure = shed['total_slurry_manure']
+                )
+                storage_list.append(storage_form)
             if "Storagelist" in request.session:
-                request.session["Storagelist"].append(model_to_dict(storage_form))
-                storage_list = []
-                for shed in request.session["Storagelist"]:
-                    storage_form = Slurry_Storage(farmer_id = farmer,
-                        zone = shed['zone'], length = shed['length'],
-                        breadth = shed['breadth'], height = shed['height'])
-                    storage_list.append(storage_form)
                 del request.session["Storagelist"]
-                Slurry_Storage.objects.bulk_create(storage_list)
-            else:
-                storage_form.save()
+            Slurry_Storage.objects.bulk_create(storage_list)
             return redirect('home')
 
     return render(request, "storage.html", 
