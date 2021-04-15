@@ -177,8 +177,9 @@ class Slurry_Storage(models.Model):
     total_slurry_manure = models.FloatField(null=True)
     total_storage = models.FloatField(null=True)
     rainfall = models.FloatField(null=True)
-    num_containers = models.IntegerField(null=True)
-    
+    max_storage = models.FloatField(null=True)
+    space_available = models.FloatField(null=True)
+    manure_produced = models.FloatField(null=True)    
 
 class Farm_Records(models.Model):
     farm_records_year = models.DateTimeField(null=True)

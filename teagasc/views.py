@@ -311,7 +311,6 @@ def storage_process(request):
         num_animals = dict(num_animals).values()
         slurry_vals = list(Monthly_Livestock_Numbers.objects.values_list('slurry_m3', flat=True))
         manure_vals = list(Monthly_Livestock_Numbers.objects.values_list('manure_m3', flat=True))
-        breakpoint()
 
         if form["choice"].value() == storage.TYPE[0][0]:
             manure = sum((a*b for (a,b) in zip(num_animals,slurry_vals)))
@@ -403,3 +402,6 @@ def storage_process(request):
 
     return render(request, "storage.html", 
     {'form':storage})
+
+def storage_process_report(request):
+    pass
