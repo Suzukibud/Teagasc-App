@@ -323,14 +323,16 @@ def storage_process(request):
 
             if form["option"].value() == storage.CHOICES[0][0]:
                 total_storage = lengt * bread * heigh
-                space_available = req_storage - total_storage
+                space_available = total_storage - req_storage
+                space_available = round(space_available,2)
             
             elif form["option"].value() == storage.CHOICES[1][0]:
                 total_storage = lengt * bread * heigh
                 deduction = rainfall_val * total_weeks
                 deduction = round(deduction,2)
                 total_storage -= deduction
-                space_available = req_storage - total_storage
+                space_available = total_storage - req_storage
+                space_available = round(space_available,2)
 
         elif form["choice"].value() == storage.TYPE[1][0]:
             manure = sum((a*b for (a,b) in zip(num_animals,manure_vals)))
@@ -341,21 +343,20 @@ def storage_process(request):
 
             if form["option"].value() == storage.CHOICES[0][0]:
                 total_storage = lengt * bread * heigh
-                space_available = req_storage - total_storage
+                space_available = total_storage - req_storage
+                space_available = round(space_available,2)
                 
             elif form["option"].value() == storage.CHOICES[1][0]:
                 total_storage = lengt * bread * heigh
                 deduction = rainfall_val * total_weeks
                 deduction = round(deduction,2)
                 total_storage -= deduction
-                space_available = req_storage - total_storage
+                space_available = total_storage - req_storage
                 space_available = round(space_available,2)
                 
 
         manure = round(manure,2)
         total_storage = round(total_storage,2)
-        req_storage = manure * total_weeks
-        space_available = req_storage - total_storage
         farmer = Farmer.objects.get(id = request.session.get("farmer_id"))
         try:
             slurry_object = Slurry_Storage.objects.filter(
