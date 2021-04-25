@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% include  "registration/login.html" %}
+
+    {% block body %}
+
+    <style>
+        h2 {
+            text-align: center;
+        }
+
+        .par {
+            text-align: center;
+            font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+            font-size:larger;
+        }
+        .p1{
+            text-align: center;
+            font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+            font-size: 25cm;
+        }
+    </style>
+        <h2> Welcome to The Teagasc Advisors Application,</h2>
+            <br>
+        <par>
+            Thank you for taking the time to use my application. It has been a 
+            long development process and there is still alot of work to carry <br>
+            out. I apologise for any bugs you may encounter whilst using the
+            application, but with continued support these issues will be resolved.<br>
+        </par>
+        <p1> The Conduct Assessment Feature is designed to carry out a Wholefarm Stocking Rate </p1>
+        
+    {% endblock %}

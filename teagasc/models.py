@@ -34,29 +34,29 @@ counties_with_attrs = {
     "carlow": ('Carlow',0.024,"a",16),
     "cavan" : ('Cavan',0.027,"d",22),
     "clare" : ('Clare',0.032,"b",18),
-    "Cork" : ('Cork',0.037,"a",16),
-    "Donegal" : ('Donegal',0.038,"c",20),
-    "Dublin" : ('Dublin',0.017,"a",16),
-    "Galway" : ('Galway',0.034,"b",18),
-    "Kerry" : ('Kerry',0.045,"b",18),
-    "Kildare" : ('Kildare',0.018,"a",16),
-    "Kilkenny" : ('Kilkenny',0.023,"a",16),
-    "Laois" : ('Laois',0.022,"a",16),
-    "Leitrim" : ('Leitrim',0.033,"c",20),
-    "Limerick" : ('Limerick',0.026,"b",18),
-    "Longford" : ('Longford',0.023,"b",18),
-    "Louth" : ('Louth',0.020,"b",18),
-    "Mayo" : ('Mayo',0.040,"b",18),
-    "Meath" : ('Meath',0.019,"b",18),
-    "Monaghan" : ('Monaghan',0.023,"d",22),
-    "Offaly" : ('Offaly',0.020,"a",16),
-    "Roscommon" : ('Roscommon',26,"b",18),
-    "Sligo" : ('Sligo',0.032,"b",18),
-    "Tipperary" : ('Tipperary',0.027,"a",16),
-    "Waterford" : ('Waterford',0.031,"a",16),
-    "Westmeath" : ('Westmeath',0.021,"b",18),
-    "Wexford" : ('Wexford',0.025,"a",16),
-    "Wicklow" : ('Wicklow',0.033,"a",16)
+    "cork" : ('Cork',0.037,"a",16),
+    "donegal" : ('Donegal',0.038,"c",20),
+    "dublin" : ('Dublin',0.017,"a",16),
+    "galway" : ('Galway',0.034,"b",18),
+    "kerry" : ('Kerry',0.045,"b",18),
+    "kildare" : ('Kildare',0.018,"a",16),
+    "kilkenny" : ('Kilkenny',0.023,"a",16),
+    "laois" : ('Laois',0.022,"a",16),
+    "leitrim" : ('Leitrim',0.033,"c",20),
+    "limerick" : ('Limerick',0.026,"b",18),
+    "longford" : ('Longford',0.023,"b",18),
+    "louth" : ('Louth',0.020,"b",18),
+    "mayo" : ('Mayo',0.040,"b",18),
+    "meath" : ('Meath',0.019,"b",18),
+    "monaghan" : ('Monaghan',0.023,"d",22),
+    "offaly" : ('Offaly',0.020,"a",16),
+    "roscommon" : ('Roscommon',26,"b",18),
+    "sligo" : ('Sligo',0.032,"b",18),
+    "tipperary" : ('Tipperary',0.027,"a",16),
+    "waterford" : ('Waterford',0.031,"a",16),
+    "westmeath" : ('Westmeath',0.021,"b",18),
+    "wexford" : ('Wexford',0.025,"a",16),
+    "wicklow" : ('Wicklow',0.033,"a",16)
 }
 
 feed_types = [
@@ -179,7 +179,6 @@ class Slurry_Storage(models.Model):
     rainfall = models.FloatField(null=True)
     max_storage = models.FloatField(null=True)
     space_available = models.FloatField(null=True)
-    manure_produced = models.FloatField(null=True)    
 
 class Farm_Records(models.Model):
     farm_records_year = models.DateTimeField(null=True)

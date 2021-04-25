@@ -1,25 +1,30 @@
-from django.shortcuts import render, redirect
-from django.http import HttpResponse
-from django.template.response import TemplateResponse
-from teagasc.models import (Farmer,Grassland,counties,
-Monthly_Livestock_Numbers, Farmer_Livestock, Slurry_Storage,
-counties_with_attrs,
-Farmer_Feed, Feed_Types, Importation, Exportation)
-from teagasc.forms import (GrasslandForm,Grassland2,
-Grassland3, Grassland4, Grassland5, import_Export, storage)
-from django.views.decorators.csrf import csrf_protect
 from datetime import datetime
+
+import ipdb
 from dateutil.parser import parse
 from django.forms.models import model_to_dict
-import ipdb
+from django.http import HttpResponse
+from django.shortcuts import redirect, render
+from django.template.response import TemplateResponse
+from django.views.decorators.csrf import csrf_protect
+from django.contrib.auth.decorators import login_required
 
+from teagasc.forms import (Grassland2, Grassland3, Grassland4, Grassland5,
+                           GrasslandForm, import_Export, storage)
+from teagasc.models import (Exportation, Farmer, Farmer_Feed, Farmer_Livestock,
+                            Feed_Types, Grassland, Importation,
+                            Monthly_Livestock_Numbers, Slurry_Storage,
+                            counties, counties_with_attrs)
 
+@login_required
+@csrf_protect
 def home(request):
     #e = Exportation(exportation_original_stocking_rate = 15,
     #export = 20, person_accepting_import = "MIchael", new_stocking_rate = 20)
     #e.save()
     return TemplateResponse(request, "home.html")
 
+@login_required
 @csrf_protect
 def conductGrasslandAssessment(request):
     if request.method=="POST":
@@ -40,6 +45,8 @@ def conductGrasslandAssessment(request):
         return redirect("/conductGrasslandAssessment2")
     return render(request, "conductGrasslandAssessment.html", {'form':GrasslandForm()})
 
+@login_required
+@csrf_protect
 def record5_calculations(owned,rented,time):
             time /= 12
             rounded_time = round(time,2)
@@ -49,6 +56,7 @@ def record5_calculations(owned,rented,time):
 
             return owned
 
+@login_required
 @csrf_protect
 def conductGrasslandAssessment2(request):
     if request.method=="POST":
@@ -70,6 +78,7 @@ def conductGrasslandAssessment2(request):
 
     return render(request, "conductGrasslandAssessment2.html", {'form':Grassland2()})
 
+@login_required
 @csrf_protect
 def conductGrasslandAssessment3(request):
     if request.method=="POST":
@@ -91,6 +100,7 @@ def conductGrasslandAssessment3(request):
     return render(request, "conductGrasslandAssessment3.html", 
     {'form':Grassland3})
 
+@login_required
 @csrf_protect
 def conductGrasslandAssessment4(request):
     if request.method=="POST":
@@ -133,6 +143,7 @@ def conductGrasslandAssessment4(request):
     form = list(zip(results, form))
     return render(request, "conductGrasslandAssessment4.html", {'form':form})
 
+@login_required
 @csrf_protect
 def conductGrasslandAssessment5(request):
     if request.method=="POST":
@@ -197,6 +208,7 @@ def conductGrasslandAssessment5(request):
     return render(request, "conductGrasslandAssessment5.html", {'form':form})
 
 
+@login_required
 @csrf_protect
 def grasslandAssessmentResult(request):
     everything = Grassland.objects.filter(farmer_id = request.session.get("farmer_id"))
@@ -223,6 +235,7 @@ def grasslandAssessmentResult(request):
     return render(request, "grasslandReport.html", {'list_for_result':list_for_result})
 
 
+@login_required
 @csrf_protect
 def importExport(request):
     if request.method=="POST":
@@ -274,6 +287,7 @@ def importExport(request):
     farmer_list = [f"{farmer.name} - {farmer.herd_no}" for farmer in farmer_list]
     return render(request, "importExport.html", {'form':import_Export, 'farmer_list':farmer_list})
 
+@login_required
 @csrf_protect
 def importExportReport(request):
     everything = Grassland.objects.filter(farmer_id = request.session.get("farmer_id"))
@@ -297,6 +311,7 @@ def importExportReport(request):
     Farmer.objects.filter(id = request.session.get("farmer_id")).update(is_assessed=True)
     return render(request, "importExportReport.html", {'list_for_result':list_for_result})   
 
+@login_required
 @csrf_protect
 def storage_process(request):
     if request.method=="POST":
@@ -370,7 +385,9 @@ def storage_process(request):
             height = heigh,
             rainfall = rainfall_val,
             total_storage = total_storage,
-            total_slurry_manure = manure
+            total_slurry_manure = manure,
+            space_available = space_available,
+            max_storage = req_storage
         )
         if form['add_another_container'].value():
             if "Storagelist" in request.session:
@@ -392,16 +409,37 @@ def storage_process(request):
                     total_storage = shed['total_storage'],
                     breadth = shed['breadth'],
                     height = shed['height'],
-                    total_slurry_manure = shed['total_slurry_manure']
+                    total_slurry_manure = shed['total_slurry_manure'],
+                    space_available = shed['space_available'],
+                    max_storage = shed['max_storage']
                 )
                 storage_list.append(storage_form)
             if "Storagelist" in request.session:
                 del request.session["Storagelist"]
             Slurry_Storage.objects.bulk_create(storage_list)
-            return redirect('home')
+
+        return redirect('storage_report')
 
     return render(request, "storage.html", 
     {'form':storage})
 
-def storage_process_report(request):
-    pass
+@login_required
+@csrf_protect
+def storage_report(request):
+    everything = Slurry_Storage.objects.filter(farmer_id = request.session.get("farmer_id"))
+    list_for_result = []
+    objects_to_update = []
+    county_val = Farmer.objects.get(id = request.session.get("farmer_id")).county
+    for row in everything:
+        max_storage = row.max_storage
+        total_storage = row.total_storage
+        space_available = row.space_available
+        total_slurry_manure = row.total_slurry_manure
+
+        objects_to_update.append(row)
+        list_for_result.append((county_val,total_slurry_manure, total_storage, round(max_storage,2), space_available))
+    
+    # The objects_to_update list will these columns in the database 
+    Slurry_Storage.objects.bulk_update(objects_to_update,["total_slurry_manure","total_storage","max_storage","space_available"])
+    Farmer.objects.filter(id = request.session.get("farmer_id")).update(is_assessed=True)
+    return render(request, "storage_report.html", {'list_for_result':list_for_result})
