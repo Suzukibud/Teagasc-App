@@ -1,62 +1,61 @@
 {% extends "base.html" %}
-{% include  "registration/login.html" %}
+{% include "registration/login.html" %}
 {% load static %}
 
-    {% block body %}
-    <style>
-        .invalid {
-            border: 3px solid red !important;
-        }
-    </style>
-    <script>
-        window.onload = function validate_field() {
-            var rows = document.getElementById("land_table").rows;
-            for(let i=3; i<rows.length;i++) {
-                var isInt = (x) => {
-                    return !isNaN(x) && !isNaN(parseInt(x));
-                };
-                rows[i].children[1].children[0].onkeyup = () => {
-                    let element = rows[i].children[1].children[0];
-                    if(!isInt(element.value)) {
-                        element.classList.add("invalid")
-                    }
-                    else {
-                        element.classList.remove("invalid");
-                    }
+{% block body %}
+<style>
+    .invalid {
+        border: 3px solid red !important;
+    }
+</style>
+<script>
+    window.onload = function validate_field() {
+        var rows = document.getElementById("land_table").rows;
+        for (let i = 3; i < rows.length; i++) {
+            var isInt = (x) => {
+                return !isNaN(x) && !isNaN(parseInt(x));
+            };
+            rows[i].children[1].children[0].onkeyup = () => {
+                let element = rows[i].children[1].children[0];
+                if (!isInt(element.value)) {
+                    element.classList.add("invalid")
+                }
+                else {
+                    element.classList.remove("invalid");
                 }
             }
         }
+    }
 
-        function valid_fields() {
-            var valid = true;
-            var rows = document.getElementById("land_table").rows;
-            for(let i=0; i<rows.length;i++) {
-                if(rows[i].children[1].children[0].classList.contains("invalid"))
-                {
-                    valid = false;
-                    break;
-                }
+    function valid_fields() {
+        var valid = true;
+        var rows = document.getElementById("land_table").rows;
+        for (let i = 0; i < rows.length; i++) {
+            if (rows[i].children[1].children[0].classList.contains("invalid")) {
+                valid = false;
+                break;
             }
-            return valid;
         }
-    </script>
-        <datalist id="farmers">
-            {% for name in farmer_list %}
-                <option value= "{{ name }}">
-            {% endfor %} 
-        </datalist>
-        <!-- <p>Select Farmer</p>
+        return valid;
+    }
+</script>
+<datalist id="farmers">
+    {% for name in farmer_list %}
+    <option value="{{ name }}">
+        {% endfor %}
+</datalist>
+<!-- <p>Select Farmer</p>
         <input list="farmers" name="farmer_name" autocomplete="off"> -->
-        <br>
-        <form action = "/storage" method="POST" onsubmit="return valid_fields()" class="formindent">
-            {% csrf_token %}
-            <table border=1 id="land_table" onload="validate_field()">
-                
-                    {{ form }}
-            </table>
-            <div id="button_wrapper">
-                <input type = 'submit' value="Submit">
-                <input type = 'reset' value="Clear">
-            </div>
-        </form>
-    {% endblock %}
+<br>
+<form action="/storage" method="POST" onsubmit="return valid_fields()" class="formindent">
+    {% csrf_token %}
+    <table border=1 id="land_table" onload="validate_field()">
+
+        {{ form }}
+    </table>
+    <div id="button_wrapper">
+        <input type='submit' value="Submit">
+        <input type='reset' value="Clear">
+    </div>
+</form>
+{% endblock %}

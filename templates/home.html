@@ -1,32 +1,49 @@
 {% extends "base.html" %}
-{% include  "registration/login.html" %}
+{% include "registration/login.html" %}
 
-    {% block body %}
+{% block body %}
 
-    <style>
-        h2 {
-            text-align: center;
-        }
+<style>
+    h2 {
+        text-align: center;
+    }
 
-        .par {
-            text-align: center;
-            font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
-            font-size:larger;
-        }
-        .p1{
-            text-align: center;
-            font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-            font-size: 25cm;
-        }
-    </style>
-        <h2> Welcome to The Teagasc Advisors Application,</h2>
-            <br>
-        <par>
-            Thank you for taking the time to use my application. It has been a 
-            long development process and there is still alot of work to carry <br>
-            out. I apologise for any bugs you may encounter whilst using the
-            application, but with continued support these issues will be resolved.<br>
-        </par>
-        <p1> The Conduct Assessment Feature is designed to carry out a Wholefarm Stocking Rate </p1>
-        
-    {% endblock %}
+    .par {
+        text-align: center;
+        font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+        font-size: larger;
+    }
+
+    .p1 {
+        text-align: center;
+        font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+        font-size: 25cm;
+    }
+</style>
+<h2> Welcome to The Teagasc Advisors Application,</h2>
+<br>
+<par>
+    Thank you for taking the time to use my application. It has been a
+    long development process and there is still alot of work to carry <br>
+    out. I apologise for any bugs you may encounter whilst using the
+    application, but with continued support these issues will be resolved.<br>
+</par>
+<br>
+<p1>The Conduct Assessment Feature is designed to carry out a Wholefarm Stocking Rate  and
+    Grassland Stocking Rate <br>
+    This is required in order to continue with assessing a farmer<br><br>
+    On both the Import / Export and the Storage feature offer name select boxes, please double click <br>
+    in order to see Farmers with stocking rates ( Otherwise farmers cannot be further assessed)<br>
+    The Import / Export function allows importation and exportation of manure or slurry <br>
+    impacting the stocking rate <br><br>
+    The Storage Feature will record sizes of storage containers and inform the farmer whether enough <br>
+    storage is available. <br><br>
+    The UpdateLSU feature is only available after a farmer has been assessed using the ConductAssessment feature <br><br>
+    The UpdateLSU Feature will update the livestock numbers affecting the total nitrates  and stocking rates<br><br>
+    The View Records feature will only be available after a farmer has been assessed using the <br>
+    ConductAssessments feature.<br>
+
+    
+</p1>
+
+{% endblock %}
