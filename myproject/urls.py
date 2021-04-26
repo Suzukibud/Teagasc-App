@@ -32,6 +32,8 @@ urlpatterns = [
     path('conductGrasslandAssessment5',views.conductGrasslandAssessment5,name='conductGrasslandAssessment5'),
     path('grasslandReport',views.grasslandAssessmentResult,name='grasslandAssessmentResult'),
     path('storage',views.storage_process,name='storage'),
+    path('updateLsu',views.update_lsu,name='updateLsu'),
+    path('records',views.view_records,name='records'),
     path('storage_report',views.storage_report,name='storage_report'),
     path('accounts/', include('django.contrib.auth.urls')),
 ]

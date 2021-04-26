@@ -54,6 +54,9 @@ class Grassland4(forms.Form):
     number_lucerne =  forms.IntegerField(widget = forms.TextInput(attrs={ "class":"formclass"}),initial=0)
 
 class Grassland5(forms.Form):
+
+    def __init__(self,*args,**kwargs):
+        super().__init__(*args,**kwargs)
     number_dairy_cows = forms.IntegerField(widget = forms.TextInput(attrs={ "class":"formclass"}),initial=0)
     number_suckler_cows = forms.IntegerField(widget = forms.TextInput(attrs={ "class":"formclass"}),initial=0)
     number_cattle1 = forms.IntegerField(widget = forms.TextInput(attrs={ "class":"formclass"}),initial=0)
@@ -75,6 +78,7 @@ class import_Export(forms.Form):
     slurry = forms.FloatField(widget = forms.TextInput(attrs={ "class":"formclass"}))
 
 class storage(forms.Form):
+    farmer_name = forms.CharField(widget= forms.TextInput(attrs={"autocomplete":"off","list":"farmers"}))
     TYPE = (("Slurry", "Slurry"), ("Farmyard Manure", "Farmyard Manure"))
     choice = forms.ChoiceField(choices = TYPE)
     CHOICES = (( "Indoor", 'Indoor'), ("Outdoor",'Outdoor'))

@@ -2,14 +2,47 @@
 {% include  "registration/login.html" %}
 
     {% block body %}
-        <style>
-            th {
-                text-align: center !important;
+    <style>
+        .invalid {
+            border: 3px solid red !important;
+        }
+    </style>
+    <script>
+        window.onload = function validate_field() {
+            var rows = document.getElementById("land_table").rows;
+            for(let i=1; i<rows.length;i++) {
+                var isInt = (x) => {
+                    return !isNaN(x) && !isNaN(parseInt(x));
+                };
+                rows[i].children[3].children[0].onkeyup = () => {
+                    let element = rows[i].children[3].children[0];
+                    if(!isInt(element.value)) {
+                        element.classList.add("invalid")
+                    }
+                    else {
+                        element.classList.remove("invalid");
+                    }
+                }
             }
-        </style>
-        <form action = "/conductGrasslandAssessment5" method="POST" id="cssTable">
+        }
+
+        function valid_fields() {
+            var valid = true;
+            var rows = document.getElementById("land_table").rows;
+            for(let i=0; i<rows.length;i++) {
+                if(rows[i].children[1].children[0].classList.contains("invalid"))
+                {
+                    valid = false;
+                    break;
+                }
+            }
+            return valid;
+        }
+    </script>
+
+        <form action = "/conductGrasslandAssessment5" method="POST" onsubmit="return valid_fields()" class="formindent">
             {% csrf_token %}
-                <table border="1" id="table">
+                <table border="1" id="land_table" onload="validate_field()">
                         <tr>
                             <th scope="col">Type of Livestock</th>
                             <th scope="col">Nitrogen</th>

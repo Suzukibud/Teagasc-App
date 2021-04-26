@@ -14,17 +14,17 @@
             <li><a href="{% url 'storage' %}">Storage</a></li>
             <li><a href="{% url 'importExport' %}">Import / Export</a></li> 
             <li><a href="{% url 'conductGrasslandAssessment' %}">Conduct Assessment</a></li>
-            <li><a href="#View Assessments">View Assessments</a></li>
+            <li><a href="{% url 'updateLsu' %}">Update LSU</a></li>
             <li><a href="{% url 'logout' %}">Logout</a></li>
-            <li style="float: right"><a href="#farm_records">Farm Records</a></li>
+            <li style="float: right"><a href="{% url 'records' %}">Farm Records</a></li>
         </ul>
         {% endblock %}
     </head>
     <body>
         
 
-       {% block body %}
+        {% block body %}
 
-       {% endblock %}
+        {% endblock %}
     </body>
 </html>

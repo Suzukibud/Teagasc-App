@@ -10,7 +10,7 @@ from django.views.decorators.csrf import csrf_protect
 from django.contrib.auth.decorators import login_required
 
 from teagasc.forms import (Grassland2, Grassland3, Grassland4, Grassland5,
-                           GrasslandForm, import_Export, storage)
+    GrasslandForm, import_Export, storage)
 from teagasc.models import (Exportation, Farmer, Farmer_Feed, Farmer_Livestock,
                             Feed_Types, Grassland, Importation,
                             Monthly_Livestock_Numbers, Slurry_Storage,
@@ -32,7 +32,7 @@ def conductGrasslandAssessment(request):
 
         farmer = Farmer(name = form["farmer_name"].value(),
         address = form["farmer_address_line_1"].value() + " " + form["farmer_address_line_2"].value()
-         + " " + form["farmer_address_line_3"].value(),
+            + " " + form["farmer_address_line_3"].value(),
         date = parse(form["date"].value(), dayfirst = True).strftime("%Y-%m-%d"), 
         county = form["county"].value(), herd_no = form["herd_no"].value())
         # if county in counties_with_attrs:
@@ -45,16 +45,15 @@ def conductGrasslandAssessment(request):
         return redirect("/conductGrasslandAssessment2")
     return render(request, "conductGrasslandAssessment.html", {'form':GrasslandForm()})
 
-@login_required
-@csrf_protect
-def record5_calculations(owned,rented,time):
-            time /= 12
-            rounded_time = round(time,2)
-            rented = rented * time
-            rounded_rented = round(rented,2)
-            owned += rounded_rented
 
-            return owned
+def record5_calculations(owned,rented,time):
+    time /= 12
+    rounded_time = round(time,2)
+    rented = rented * time
+    rounded_rented = round(rented,2)
+    owned += rounded_rented
+
+    return owned
 
 @login_required
 @csrf_protect
@@ -134,7 +133,8 @@ def conductGrasslandAssessment4(request):
             number_distillers_grain = (num20 := float(form['number_distillers_grain'].value())),
             number_lucerne = (num21 := float(form['number_lucerne'].value())))
         
-        grass.feed_tonnage = (total := (num1 + num2 + num3 + num4 + num5 + num6 + num7 + num8 + num9 + num10 + num11 + num12 + num13 + num14 +num15 + num16 + num17 + num18 + num19 + num20 + num21))
+        grass.feed_tonnage = (total := (num1 + num2 + num3 + num4 + num5 + num6
+            + num7 + num8 + num9 + num10 + num11 + num12 + num13 + num14 +num15 + num16 + num17 + num18 + num19 + num20 + num21))
         grass.save()
         num_of_feed.save()
         return redirect("/conductGrasslandAssessment5")
@@ -204,6 +204,7 @@ def conductGrasslandAssessment5(request):
         return redirect("/grasslandReport")
     results = Monthly_Livestock_Numbers.objects.all()
     form = Grassland5()
+    
     form = list(zip(results, form))
     return render(request, "conductGrasslandAssessment5.html", {'form':form})
 
@@ -227,7 +228,8 @@ def grasslandAssessmentResult(request):
         row.grassland_stocking_rate = gsr
         row.wholefarm_stocking_rate = wfsr
         objects_to_update.append(row)
-        list_for_result.append((total_organic_n,total_organic_p, total_land_area, round(gsr,2), round(wfsr,2), round(total_lsu,2)))
+        list_for_result.append((total_organic_n,total_organic_p, total_land_area, round(gsr,2),
+            round(wfsr,2), round(total_lsu,2)))
     
     # The objects_to_update list will these columns in the database 
     Grassland.objects.bulk_update(objects_to_update,["grassland_stocking_rate","wholefarm_stocking_rate"])
@@ -304,7 +306,8 @@ def importExportReport(request):
 
         row.wholefarm_stocking_rate = wfsr
         objects_to_update.append(row)
-        list_for_result.append((total_organic_n,total_organic_p, total_land_area, round(gsr,2), round(wfsr,2), round(total_lsu,2)))
+        list_for_result.append((total_organic_n,total_organic_p, total_land_area, round(gsr,2),
+            round(wfsr,2), round(total_lsu,2)))
     
     # The objects_to_update list will these columns in the database 
     Grassland.objects.bulk_update(objects_to_update,["grassland_stocking_rate","wholefarm_stocking_rate"])
@@ -315,11 +318,22 @@ def importExportReport(request):
 @csrf_protect
 def storage_process(request):
     if request.method=="POST":
-        form = storage(request.POST)
+        form = storage(request.POST) 
+        try:
+            farmer_name = form["farmer_name"].value()
+            herd_no = farmer_name.split("-")[1].strip()
+            farmer = Farmer.objects.get(herd_no=herd_no)
+            if farmer == None:
+                raise Exception()
+            request.session["farmer_id"] = farmer.id
+        except:
+            farmer_list = Farmer.objects.filter(is_assessed = True)
+            farmer_list = [f"{farmer.name} - {farmer.herd_no}" for farmer in farmer_list]
+            return render(request, "storage.html", {'form':storage_process, 'farmer_list':farmer_list})
         county_val = Farmer.objects.get(id = request.session.get("farmer_id")).county.lower()
         rainfall_val = float(counties_with_attrs[county_val][1])
         total_weeks = float(counties_with_attrs[county_val][3])
-        num_animals = Farmer_Livestock.objects.get(id = request.session.get("farmer_id"))
+        num_animals = Farmer_Livestock.objects.get(farmer_id = farmer.id)
         num_animals = model_to_dict(num_animals)
         num_animals.pop('id')
         num_animals.pop('farmer_id')
@@ -420,8 +434,9 @@ def storage_process(request):
 
         return redirect('storage_report')
 
-    return render(request, "storage.html", 
-    {'form':storage})
+    farmer_list = Farmer.objects.filter(is_assessed = True)
+    farmer_list = [f"{farmer.name} - {farmer.herd_no}" for farmer in farmer_list]
+    return render(request, "storage.html", {'form':storage, 'farmer_list':farmer_list})
 
 @login_required
 @csrf_protect
@@ -433,6 +448,7 @@ def storage_report(request):
     for row in everything:
         max_storage = row.max_storage
         total_storage = row.total_storage
+
         space_available = row.space_available
         total_slurry_manure = row.total_slurry_manure
 
@@ -440,6 +456,112 @@ def storage_report(request):
         list_for_result.append((county_val,total_slurry_manure, total_storage, round(max_storage,2), space_available))
     
     # The objects_to_update list will these columns in the database 
-    Slurry_Storage.objects.bulk_update(objects_to_update,["total_slurry_manure","total_storage","max_storage","space_available"])
+    Slurry_Storage.objects.bulk_update(objects_to_update,["total_slurry_manure","total_storage","max_storage"
+    ,"space_available"])
     Farmer.objects.filter(id = request.session.get("farmer_id")).update(is_assessed=True)
     return render(request, "storage_report.html", {'list_for_result':list_for_result})
+
+
+@login_required
+@csrf_protect
+def update_lsu(request):
+    if request.method == "POST":
+        form = storage(request.POST) 
+        try:
+            farmer_name = form["farmer_name"].value()
+            herd_no = farmer_name.split("-")[1].strip()
+            farmer = Farmer.objects.get(herd_no=herd_no)
+            if farmer == None:
+                raise Exception()
+            request.session["farmer_id"] = farmer.id
+        except:
+            farmer_list = Farmer.objects.filter(is_assessed = True)
+            farmer_list = [f"{farmer.name} - {farmer.herd_no}" for farmer in farmer_list]
+            return render(request, "conductGrasslandAssessment5.html", {'form':Grassland5, 'farmer_list':farmer_list})
+
+        farmer = Farmer.objects.get(id = request.session.get("farmer_id"))
+        grass = Grassland.objects.get(id = request.session.get("grassland_id"))
+        num_of_stock = Farmer_Livestock(farmer_id = farmer,
+            number_dairy_cows = (num1 := float(form['number_dairy_cows'].value())),
+            number_suckler_cows = (num2 := float(form['number_suckler_cows'].value())),
+            number_cattle1 = (num3 := float(form['number_cattle1'].value())),
+            number_cattle2 = (num4 := float(form['number_cattle2'].value())),
+            number_cattle3 = (num5 := float(form['number_cattle3'].value())),
+            number_mountain_ewe = (num6 := float(form['number_mountain_ewe'].value())),
+            number_lowland_ewe = (num7 := float(form['number_lowland_ewe'].value())),
+            number_mountain_hogget = (num8 := float(form['number_mountain_hogget'].value())),
+            number_lowland_hogget = (num9 := float(form['number_lowland_hogget'].value())),
+            number_goats = (num10 := float(form['number_goats'].value())),
+            number_horse1 = (num11 := float(form['number_horse1'].value())),
+            number_horse2 = (num12 := float(form['number_horse2'].value())))
+
+        animal_list = [
+            num1,
+            num2,
+            num3,
+            num4,
+            num5,
+            num6,
+            num7,
+            num8,
+            num9,
+            num10,
+            num11,
+            num12
+        ]
+        total_nitrates = 0
+        grass.number_of_animals = (total := (sum(animal_list)))
+        nitrate_results = Monthly_Livestock_Numbers.objects.values_list('organic_nitrates', flat=True)
+        for a, b in zip(animal_list, nitrate_results):
+            total_nitrates += a * b
+        grass.organicN = total_nitrates
+
+        total_potassium = 0
+        potass_results = Monthly_Livestock_Numbers.objects.values_list('organic_potassium', flat = True)
+        for c,d in zip(animal_list,potass_results):
+            total_potassium += c * d
+        grass.organicP = total_potassium
+
+        total_lsu = 0
+        lsu_vals = Monthly_Livestock_Numbers.objects.values_list('lsu', flat = True)
+        for a,b in zip(animal_list, lsu_vals):
+            total_lsu += a * b
+        grass.lsu = total_lsu
+        
+        
+        num_of_stock.save()
+        grass.save()
+        return redirect("/grasslandReport")
+
+
+    farmer = Farmer.objects.get(id = request.session.get("farmer_id"))
+    number_animals = Farmer_Livestock.objects.filter(farmer_id = farmer.id)
+    d = model_to_dict(number_animals[0])
+    d.pop('id')
+    d.pop('farmer_id')
+    form = Grassland5(initial = d)
+    form = list(zip(Monthly_Livestock_Numbers.objects.all(), form))
+    return render(request, "conductGrasslandAssessment5.html", {'form':form})
+
+
+@login_required
+@csrf_protect
+def view_records(request):
+    if request.method=="POST":
+        stocking_rate_list = Grassland.objects.filter(grassland_stocking_rate > 0)
+
+        form = import_Export(request.POST) 
+        try:
+            farmer_name = form["farmer_name"].value()
+            herd_no = farmer_name.split("-")[1].strip()
+            farmer = Farmer.objects.get(herd_no=herd_no)
+            if farmer == None:
+                raise Exception()
+            request.session["farmer_id"] = farmer.id
+        except:
+            farmer_list = Farmer.objects.filter(is_assessed = True)
+            farmer_list = [f"{farmer.name} - {farmer.herd_no}" for farmer in farmer_list]
+            return render(request, "importExport.html", {'form':import_Export, 'farmer_list':farmer_list})
+
+        grass = Grassland.objects.get(farmer_id = request.session.get("farmer_id"))
+        farmer = Farmer.objects.get(id = request.session.get("farmer_id"))
