@@ -1,0 +1,4 @@
+pytest:
+    run: pytest .
+    coverage: pytest . --cov
+    coverage + html: pytest . --cov--cov-report=html

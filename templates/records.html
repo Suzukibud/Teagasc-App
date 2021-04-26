@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+{% include  "registration/login.html" %}
+
+    {% block body %}
+        <style>
+            td {
+                text-align: center;
+            }
+
+            th {
+                text-align: center;
+            }
+        </style>
+        <form action = "/view_records" method="POST" class="formindent" >
+            {% csrf_token %}
+                <table border="1" id="table">
+                        <tr>
+                            <th scope="col">Total Nitrates</th>
+                            <th scope="col">Total Phosphates</th>
+                            <th scope="col">Total Land Area</th>
+                            <th scope="col">Grassland Stocking Rate</th>
+                            <th scope="col">Wholefarm Stocking Rate</th>
+                            <th scope="col">Livestock unit per Hectacre</th>
+                            <th scope="col">County</th>
+                            <th scope="col">Total Slurry Manure</th>
+                            <th scope="col">Total Storage</th>
+                            <th scope="col">Maximum Storage Available</th>
+                            <th scope="col">Space Available</th>
+                        </tr>
+                        {% for total in list_for_result %}
+                        <tr>
+                            <td>{{ total.0 }}</td>
+                            <td>{{ total.1 }}</td>
+                            <td>{{ total.2 }}</td>
+                            <td>{{ total.3 }}</td>
+                            <td>{{ total.4 }}</td>
+                            <td>{{ total.5 }}</td>
+                            <td>{{ total.6 }}</td>
+                            <td>{{ total.7 }}</td>
+                            <td>{{ total.8 }}</td>
+                            <td>{{ total.9 }}</td>
+                            <td>{{ total.10 }}</td>
+                        </tr>
+                        {% endfor %}
+                </table>
+                <div id="button_wrapper">
+                    <a href="/" id="button_wrapper">
+                        <input type="button" value="Home"/>
+                </div>
+        </form>
+    {% endblock %}

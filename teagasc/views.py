@@ -333,7 +333,7 @@ def storage_process(request):
         county_val = Farmer.objects.get(id = request.session.get("farmer_id")).county.lower()
         rainfall_val = float(counties_with_attrs[county_val][1])
         total_weeks = float(counties_with_attrs[county_val][3])
-        num_animals = Farmer_Livestock.objects.get(farmer_id = farmer.id)
+        num_animals = Farmer_Livestock.objects.latest('farmer_id_id')
         num_animals = model_to_dict(num_animals)
         num_animals.pop('id')
         num_animals.pop('farmer_id')
@@ -408,8 +408,10 @@ def storage_process(request):
                 request.session["Storagelist"].append(model_to_dict(storage_form))
                 request.session.modified = True
             else:
-                request.session["Storagelist"] = [model_to_dict(storage_form)]  
-            return render(request, "storage.html", {'form':storage})
+                request.session["Storagelist"] = [model_to_dict(storage_form)]
+            farmer_list = Farmer.objects.filter(is_assessed = True)
+            farmer_list = [f"{farmer.name} - {farmer.herd_no}" for farmer in farmer_list]  
+            return render(request, "storage.html", {'form':storage,'farmer_list':farmer_list})
         else:
             save_list = request.session.get("Storagelist",[])
             save_list.append(model_to_dict(storage_form))
@@ -535,8 +537,8 @@ def update_lsu(request):
 
 
     farmer = Farmer.objects.get(id = request.session.get("farmer_id"))
-    number_animals = Farmer_Livestock.objects.filter(farmer_id = farmer.id)
-    d = model_to_dict(number_animals[0])
+    number_animals = Farmer_Livestock.objects.filter(farmer_id = farmer.id).latest('id')
+    d = model_to_dict(number_animals)
     d.pop('id')
     d.pop('farmer_id')
     form = Grassland5(initial = d)
@@ -547,21 +549,40 @@ def update_lsu(request):
 @login_required
 @csrf_protect
 def view_records(request):
-    if request.method=="POST":
-        stocking_rate_list = Grassland.objects.filter(grassland_stocking_rate > 0)
+    if not "farmer_id" in request.session:
+        redirect('home')
+        
+    everything = Grassland.objects.filter(farmer_id = request.session.get("farmer_id"))
+    slurr = Slurry_Storage.objects.filter(farmer_id = request.session.get("farmer_id"))
+    county_val = Farmer.objects.get(id = request.session.get("farmer_id")).county
+    list_for_result = []
+    objects_to_update = []
+    for row in everything:
+        total_organic_n = row.organicN
+        total_organic_p = row.organicP
+        total_land_area = row.total_land_area
+        total_grass_area = row.total_grass_area
+        total_lsu = row.lsu
 
-        form = import_Export(request.POST) 
-        try:
-            farmer_name = form["farmer_name"].value()
-            herd_no = farmer_name.split("-")[1].strip()
-            farmer = Farmer.objects.get(herd_no=herd_no)
-            if farmer == None:
-                raise Exception()
-            request.session["farmer_id"] = farmer.id
-        except:
-            farmer_list = Farmer.objects.filter(is_assessed = True)
-            farmer_list = [f"{farmer.name} - {farmer.herd_no}" for farmer in farmer_list]
-            return render(request, "importExport.html", {'form':import_Export, 'farmer_list':farmer_list})
+        gsr = total_organic_n / total_grass_area
+        wfsr = total_organic_n / total_land_area
 
-        grass = Grassland.objects.get(farmer_id = request.session.get("farmer_id"))
-        farmer = Farmer.objects.get(id = request.session.get("farmer_id"))
+        row.grassland_stocking_rate = gsr
+        row.wholefarm_stocking_rate = wfsr
+        objects_to_update.append(row)
+        list_for_result.append([total_organic_n,total_organic_p, total_land_area, round(gsr,2),
+            round(wfsr,2), round(total_lsu,2)])
+    
+        for rows in slurr:
+            max_storage = rows.max_storage
+            total_storage = rows.total_storage
+
+            space_available = rows.space_available
+            total_slurry_manure = rows.total_slurry_manure
+
+            objects_to_update.append(rows)
+            list_for_result[-1] = list_for_result[-1] + [county_val,total_slurry_manure, total_storage, round(max_storage,2), space_available]
+    
+    # The objects_to_update list will these columns in the database 
+    Farmer.objects.filter(id = request.session.get("farmer_id")).update(is_assessed=True)
+    return render(request, "records.html", {'list_for_result':list_for_result})
