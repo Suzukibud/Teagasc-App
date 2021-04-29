@@ -1,3 +1,6 @@
+"""
+    Views.py contains the logic for the Teagasc Advisors Application
+"""
 from datetime import datetime
 
 import ipdb
@@ -45,6 +48,9 @@ def home(request):
 @login_required
 @csrf_protect
 def conductGrasslandAssessment(request):
+    """
+    This function is responsible for storing the personal information associated with the farmer
+    """
     if request.method == "POST":
         # herdno_list = Farmer.objects.values_list("herd_no", flat=True)
         form = GrasslandForm(request.POST)
@@ -79,6 +85,9 @@ def conductGrasslandAssessment(request):
 
 
 def record5_calculations(owned, rented, time):
+    """
+    This function performs the record 5 calculation
+    """
     time /= 12
     rounded_time = round(time, 2)
     rented = rented * time
@@ -91,6 +100,10 @@ def record5_calculations(owned, rented, time):
 @login_required
 @csrf_protect
 def conductGrasslandAssessment2(request):
+    """
+    This function records the inputted land information, performs relevant calculations and 
+    stores the data
+    """
     if request.method == "POST":
         form = Grassland2(request.POST)
         if form.is_valid():
@@ -121,6 +134,10 @@ def conductGrasslandAssessment2(request):
 @login_required
 @csrf_protect
 def conductGrasslandAssessment3(request):
+    """
+    This function records information relating to a fertilizer plan, this feature is
+    not yet implemented
+    """
     if request.method == "POST":
         form = Grassland3(request.POST)
 
@@ -145,6 +162,12 @@ def conductGrasslandAssessment3(request):
 @login_required
 @csrf_protect
 def conductGrasslandAssessment4(request):
+    """
+    This function records information relating to a fertilizer plan, the function will
+    record the amount of feed a farmer owns and calculates whether they are within limits.
+    this feature is
+    not yet implemented
+    """
     if request.method == "POST":
         form = Grassland4(request.POST)
 
@@ -185,7 +208,9 @@ def conductGrasslandAssessment4(request):
             ),
             number_lucerne=(num21 := float(form["number_lucerne"].value())),
         )
-
+        """
+        Calculating total tonnage. Not finished will be refactored
+        """
         grass.feed_tonnage = (
             total := (
                 num1
@@ -223,6 +248,9 @@ def conductGrasslandAssessment4(request):
 @login_required
 @csrf_protect
 def conductGrasslandAssessment5(request):
+        """
+        This function records a farmers livestock information 
+        """
     if request.method == "POST":
         form = Grassland5(request.POST)
 
@@ -262,6 +290,9 @@ def conductGrasslandAssessment5(request):
             num11,
             num12,
         ]
+        """
+        Calculating total nitrates and phosphates from the input livestock figures 
+        """
         total_nitrates = 0
         grass.number_of_animals = (total := (sum(animal_list)))
         nitrate_results = Monthly_Livestock_Numbers.objects.values_list(
@@ -279,6 +310,9 @@ def conductGrasslandAssessment5(request):
             total_potassium += c * d
         grass.organicP = total_potassium
 
+        """
+        Calculating livestock unit per hectare
+        """
         total_lsu = 0
         lsu_vals = Monthly_Livestock_Numbers.objects.values_list("lsu", flat=True)
         for a, b in zip(animal_list, lsu_vals):
@@ -298,6 +332,9 @@ def conductGrasslandAssessment5(request):
 @login_required
 @csrf_protect
 def grasslandAssessmentResult(request):
+    """
+        Displaying the results from the conduct assessment
+        """
     everything = Grassland.objects.filter(farmer_id=request.session.get("farmer_id"))
     list_for_result = []
     objects_to_update = []
@@ -336,6 +373,9 @@ def grasslandAssessmentResult(request):
 @login_required
 @csrf_protect
 def importExport(request):
+    """
+        Taking in the import/export information
+        """
     if request.method == "POST":
         form = import_Export(request.POST)
         try:
@@ -361,7 +401,9 @@ def importExport(request):
 
         total_n = grass.organicN
         area = grass.total_land_area
-
+        """
+        Selecting which action
+        """
         if form["option"].value() == "Import":
             farmer_import = Importation(
                 farmer_id=farmer,
@@ -403,6 +445,9 @@ def importExport(request):
 @login_required
 @csrf_protect
 def importExportReport(request):
+    """
+        Import Export Result
+        """
     everything = Grassland.objects.filter(farmer_id=request.session.get("farmer_id"))
     list_for_result = []
     objects_to_update = []
@@ -441,6 +486,9 @@ def importExportReport(request):
 @login_required
 @csrf_protect
 def storage_process(request):
+    """
+        method recording information relating to storage facilities
+        """
     if request.method == "POST":
         form = storage(request.POST)
         try:
@@ -477,6 +525,9 @@ def storage_process(request):
             Monthly_Livestock_Numbers.objects.values_list("manure_m3", flat=True)
         )
 
+        """
+        Retrieving values from tables
+        """
         if form["choice"].value() == storage.TYPE[0][0]:
             manure = sum((a * b for (a, b) in zip(num_animals, slurry_vals)))
             lengt = (leng := float(form["length"].value()))
@@ -484,7 +535,9 @@ def storage_process(request):
             bread = (breth := float(form["breadth"].value()))
             heigh = (hight := float(form["height"].value()))
             req_storage = manure * total_weeks
-
+        """
+        Calculations
+        """
             if form["option"].value() == storage.CHOICES[0][0]:
                 total_storage = lengt * bread * heigh
                 space_available = total_storage - req_storage
@@ -585,6 +638,9 @@ def storage_process(request):
 @login_required
 @csrf_protect
 def storage_report(request):
+    """
+        displaying the results from storage function
+        """
     everything = Slurry_Storage.objects.filter(
         farmer_id=request.session.get("farmer_id")
     )
@@ -621,6 +677,10 @@ def storage_report(request):
 @login_required
 @csrf_protect
 def update_lsu(request):
+    """
+        Feature for retrieving farmers current number livestock, feature will change 
+        lsu and nitrates when livestock figures are updated
+        """
     if request.session.get("farmer_id") is None:
         return redirect("home")
     else :
@@ -721,6 +781,9 @@ def update_lsu(request):
 @login_required
 @csrf_protect
 def view_records(request):
+    """
+        Full report
+        """
     if request.session.get("farmer_id") is None:
         return redirect("home")
     else :

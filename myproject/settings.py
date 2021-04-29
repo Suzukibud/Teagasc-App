@@ -39,6 +39,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.forms',
+    'django_extensions',
+    'models2puml',
+    'django.contrib.admindocs',
     
     'teagasc',
 ]

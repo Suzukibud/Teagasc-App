@@ -21,6 +21,7 @@ from teagasc import views
 
 urlpatterns = [
     path("admin/", admin.site.urls),
+    path('admin/doc/', include('django.contrib.admindocs.urls')),
     path("", views.home, name="home"),
     path("home", views.home, name="home"),
     path("importExport", views.importExport, name="importExport"),

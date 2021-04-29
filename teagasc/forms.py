@@ -1,10 +1,18 @@
+"""
+This file will store all the templates
+"""
 from django import forms
 from django.conf import settings
 import datetime
 from .models import counties, feed_types, livestock_type
 
-
+"""
+Thi
+"""
 class GrasslandForm(forms.Form):
+    """
+    This form will take in the farmers personal information
+    """
     farmer_name = forms.CharField(
         max_length=30, widget=forms.TextInput(attrs={"class": "formclass"})
     )
@@ -36,20 +44,28 @@ class GrasslandForm(forms.Form):
 
 
 class Grassland2(forms.Form):
-    owned_land = forms.FloatField(widget=forms.TextInput(attrs={"class": "formclass"}))
-    rented_land = forms.FloatField(widget=forms.TextInput(attrs={"class": "formclass"}))
-    time_rented = forms.IntegerField(
+    """
+    This form will take in the farmers land information
+    """
+    owned_land___hectares = forms.FloatField(widget=forms.TextInput(attrs={"class": "formclass"}))
+    rented_land___hectares = forms.FloatField(widget=forms.TextInput(attrs={"class": "formclass"}))
+    time_rented__months = forms.IntegerField(
         widget=forms.TextInput(attrs={"class": "formclass"})
     )
-    total_tillage_area = forms.FloatField(
+    total_tillage_area___hectares = forms.FloatField(
         widget=forms.TextInput(attrs={"class": "formclass"})
     )
-    area_reseeded = forms.FloatField(
+    area_reseeded___hectares = forms.FloatField(
         widget=forms.TextInput(attrs={"class": "formclass"})
     )
 
 
 class Grassland3(forms.Form):
+    """
+    This form will take in the farmers information for a fertilizer plan, this is a new feature to be 
+    implemented in the future
+    
+    """
     sample_code = forms.CharField(widget=forms.TextInput(attrs={"class": "formclass"}))
     date_taken = forms.CharField(widget=forms.TextInput(attrs={"class": "formclass"}))
     sample_area = forms.CharField(widget=forms.TextInput(attrs={"class": "formclass"}))
@@ -63,6 +79,9 @@ class Grassland3(forms.Form):
 
 
 class Grassland4(forms.Form):
+    """
+    This form will take in the farmers feed information for livestock
+    """
     number_compound = forms.IntegerField(
         widget=forms.TextInput(attrs={"class": "formclass"}), initial=0
     )
@@ -129,6 +148,9 @@ class Grassland4(forms.Form):
 
 
 class Grassland5(forms.Form):
+    """
+    This form will take in the farmers livestock information
+    """
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
@@ -174,18 +196,24 @@ class Grassland5(forms.Form):
 
 
 class import_Export(forms.Form):
+    """
+    This form will take in the farmers Import Export information
+    """
     CHOICES = (("Import", "Import"), ("Export", "Export"))
     option = forms.ChoiceField(choices=CHOICES)
     farmer_name = forms.CharField(
         widget=forms.TextInput(attrs={"autocomplete": "off", "list": "farmers"})
     )
-    farmyard_manure = forms.FloatField(
+    farmyard_manure__tonnes = forms.FloatField(
         widget=forms.TextInput(attrs={"class": "formclass"})
     )
-    slurry = forms.FloatField(widget=forms.TextInput(attrs={"class": "formclass"}))
+    slurry__tonnes = forms.FloatField(widget=forms.TextInput(attrs={"class": "formclass"}))
 
 
 class storage(forms.Form):
+    """
+    This form will take in the farmers storage information
+    """
     farmer_name = forms.CharField(
         widget=forms.TextInput(attrs={"autocomplete": "off", "list": "farmers"})
     )

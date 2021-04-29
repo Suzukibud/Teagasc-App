@@ -1,9 +1,16 @@
+"""
+    models.py contains all the models stored in the database
+"""
 from django.db import models
 from django.contrib.auth.models import User
 
 # User already defined in built in app named auth
 
+
 counties = [
+    """
+    This is a list of tuples for populating the county selection box
+    """
     ("carlow", "Carlow"),
     ("cavan", "Cavan"),
     ("clare", "Clare"),
@@ -32,7 +39,12 @@ counties = [
     ("wicklow", "Wicklow"),
 ]
 
+
 counties_with_attrs = {
+    """
+    This is a dictionary containing important information related to each county,
+    these values represent storage periods and rainfall, etc..
+    """
     "carlow": ("Carlow", 0.024, "a", 16),
     "cavan": ("Cavan", 0.027, "d", 22),
     "clare": ("Clare", 0.032, "b", 18),
@@ -80,6 +92,9 @@ livestock_type = [
 
 
 class Farmer(models.Model):
+    """
+    This is the farmer model, the attributes to be stored in the database
+    """
     name = models.CharField(max_length=30)
     address = models.CharField(max_length=30)
     county = models.CharField(max_length=30, choices=counties, null=True)
@@ -90,6 +105,10 @@ class Farmer(models.Model):
 
 
 class Grassland(models.Model):
+    """
+    This is the Grassland model, the attributes to be stored in the database.
+    This will be changing after implementation of a new feature
+    """
     farmer_id = models.ForeignKey(Farmer, on_delete=models.CASCADE, default=1)
     owned_land = models.FloatField(null=True)
     rented_land = models.FloatField(null=True)
@@ -98,6 +117,26 @@ class Grassland(models.Model):
     total_tillage_area = models.FloatField(null=True)
     total_land_area = models.FloatField(null=True)
     area_reseeded = models.FloatField(null=True)
+    organicN = models.FloatField(null=True)
+    organicP = models.FloatField(null=True)
+    type_of_stock = models.CharField(max_length=30, null=True)
+    type_of_feed = models.CharField(max_length=30, null=True)
+    feed_name = models.CharField(max_length=30, null=True)
+    feed_tonnage = models.CharField(max_length=30, null=True)
+    number_of_animals = models.CharField(max_length=30, null=True)
+    grassland_stocking_rate = models.FloatField(null=True)
+    wholefarm_stocking_rate = models.FloatField(null=True)
+    imports = models.FloatField(null=True)
+    exports = models.FloatField(null=True)
+    legalN_limit = models.FloatField(null=True)
+    legalP_limit = models.FloatField(null=True)
+    lsu = models.FloatField(null=True)
+
+    # concentrateFed = models.FloatField(null=True)
+    # soil_samples = models.CharField(max_length=30)
+    # reseeding = models.CharField(max_length=30)
+    # lime_required = models.FloatField(null=True)
+    # enterprise = models.CharField(max_length=30)
     # sample_code = models.CharField(max_length=30, null=True)
     # date_taken = models.DateField(null=True)
     # expiry_date = models.DateField(null=True)
@@ -108,28 +147,11 @@ class Grassland(models.Model):
     # p_index = models.FloatField(null=True)
     # k_value = models.FloatField(null=True)
     # k_index = models.FloatField(null=True)
-    organicN = models.FloatField(null=True)
-    organicP = models.FloatField(null=True)
-    type_of_stock = models.CharField(max_length=30, null=True)
-    type_of_feed = models.CharField(max_length=30, null=True)
-    feed_name = models.CharField(max_length=30, null=True)
-    feed_tonnage = models.CharField(max_length=30, null=True)
-    number_of_animals = models.CharField(max_length=30, null=True)
-    grassland_stocking_rate = models.FloatField(null=True)
-    wholefarm_stocking_rate = models.FloatField(null=True)
-    # soil_samples = models.CharField(max_length=30)
-    # reseeding = models.CharField(max_length=30)
-    # lime_required = models.FloatField(null=True)
-    # enterprise = models.CharField(max_length=30)
-    imports = models.FloatField(null=True)
-    exports = models.FloatField(null=True)
-    # concentrateFed = models.FloatField(null=True)
-    legalN_limit = models.FloatField(null=True)
-    legalP_limit = models.FloatField(null=True)
-    lsu = models.FloatField(null=True)
-
 
 class Importation(models.Model):
+    """
+    This is the Importation model, the attributes to be stored in the database.
+    """
     farmer_id = models.ForeignKey(Farmer, on_delete=models.CASCADE, default=1)
     farmyard_manure = models.IntegerField(null=True)
     slurry = models.IntegerField(null=True)
@@ -138,6 +160,9 @@ class Importation(models.Model):
 
 
 class Exportation(models.Model):
+    """
+    This is the Exportation model, the attributes to be stored in the database.
+    """
     farmer_id = models.ForeignKey(Farmer, on_delete=models.CASCADE, default=1)
     farmyard_manure = models.IntegerField(null=True)
     slurry = models.IntegerField(null=True)
@@ -146,6 +171,11 @@ class Exportation(models.Model):
 
 
 class Monthly_Livestock_Numbers(models.Model):
+    """
+    This is the Monthly livestock numbers model, the attributes to be stored 
+    in the database. This model also contains important information relating to 
+    each breed of livestock
+    """
     monthly_livestock_numbers = models.TextField(null=True)
     type_of_animal = models.CharField(max_length=30)
     organic_nitrates = models.FloatField(null=True)
@@ -156,6 +186,9 @@ class Monthly_Livestock_Numbers(models.Model):
 
 
 # class Tillage(models.Model):
+    """
+    This is the Feed Types model, not currently implemented.
+    """
 #     tillage_year = models.DateTimeField(null=True)
 #     tillage_imports = models.FloatField(null=True)
 #     area_tillage = models.FloatField(null=True)
@@ -168,6 +201,9 @@ class Monthly_Livestock_Numbers(models.Model):
 
 
 # class Fertilzer_Plan(models.Model):
+        """
+        This is the Feed Types model, not currently implemented.
+        """
 #     opening_phospheros = models.FloatField(null=True)
 #     opening_nitrogen = models.FloatField(null=True)
 #     opening_stock = models.CharField(max_length=30)
@@ -178,6 +214,10 @@ class Monthly_Livestock_Numbers(models.Model):
 
 
 class Slurry_Storage(models.Model):
+     """
+    This is the Storage model, the attributes to be stored in the database.
+    This will contain the dimensions of the storage containers
+    """
     farmer_id = models.ForeignKey(Farmer, on_delete=models.CASCADE, default=1)
     length = models.FloatField(null=True)
     breadth = models.FloatField(null=True)
@@ -190,6 +230,10 @@ class Slurry_Storage(models.Model):
 
 
 class Farm_Records(models.Model):
+    """
+    This is the Farm Records model, the attributes to be stored in the database.
+    This model is not currently in use until implementation of new feature
+    """
     farm_records_year = models.DateTimeField(null=True)
     farm_records_max_nitrogen_allowed = models.FloatField(null=True)
     farm_records_max_phospheros_allowed = models.FloatField(null=True)
@@ -204,6 +248,10 @@ class Farm_Records(models.Model):
 
 
 class Farmer_Livestock(models.Model):
+    """
+    This is the Farmer Livestock model, the attributes to be stored in the database.
+    This model will store the amount of livestock a farmer owns
+    """
     farmer_id = models.ForeignKey(Farmer, on_delete=models.CASCADE, default=1)
     number_dairy_cows = models.IntegerField(null=True)
     number_suckler_cows = models.IntegerField(null=True)
@@ -220,6 +268,9 @@ class Farmer_Livestock(models.Model):
 
 
 class Feed_Types(models.Model):
+    """
+    This is the Feed Types model, not currently implemented.
+    """
     farmer_id = models.ForeignKey(Farmer, on_delete=models.CASCADE, default=1)
     feed_type = models.CharField(max_length=30)
     feed_name = models.CharField(max_length=40)
@@ -227,6 +278,9 @@ class Feed_Types(models.Model):
 
 
 class Farmer_Feed(models.Model):
+    """
+    This is the Feed Types model, not currently implemented.
+    """
     farmer_id = models.ForeignKey(Farmer, on_delete=models.CASCADE, default=1)
     number_compound = models.IntegerField(null=True)
     number_wheat = models.IntegerField(null=True)
