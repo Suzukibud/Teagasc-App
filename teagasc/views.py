@@ -45,10 +45,17 @@ def home(request):
 @login_required
 @csrf_protect
 def conductGrasslandAssessment(request):
-    herdno_list = Farmer.objects.values_list("herd_no", flat=True)
     if request.method == "POST":
-        form = GrasslandForm(request.POST)       
-        
+        # herdno_list = Farmer.objects.values_list("herd_no", flat=True)
+        form = GrasslandForm(request.POST)
+
+        # if(any( herd.herd_no == form['herd_no'].value() for herd in herdno_list )):
+        #     # It exists
+
+        # for herd in herdno_list:
+        #     if herd.herd_no == form['herd_no'].value():
+                # It exists
+
         farmer = Farmer(
             name=form["farmer_name"].value(),
             address=form["farmer_address_line_1"].value()
@@ -59,9 +66,8 @@ def conductGrasslandAssessment(request):
             date=parse(form["date"].value(), dayfirst=True).strftime("%Y-%m-%d"),
             county=form["county"].value(),
             herd_no=form["herd_no"].value()
-
         )
-        
+
         # if county in counties_with_attrs:
         values = counties_with_attrs.get(form["county"].value().lower())
 
@@ -69,7 +75,7 @@ def conductGrasslandAssessment(request):
         request.session["farmer_id"] = farmer.id
 
         return redirect("/conductGrasslandAssessment2")
-    return render(request, "conductGrasslandAssessment.html", {"form": GrasslandForm(),"herdlist":herdno_list})
+    return render(request, "conductGrasslandAssessment.html", {"form": GrasslandForm()})
 
 
 def record5_calculations(owned, rented, time):
@@ -217,7 +223,6 @@ def conductGrasslandAssessment4(request):
 @login_required
 @csrf_protect
 def conductGrasslandAssessment5(request):
-    breakpoint()
     if request.method == "POST":
         form = Grassland5(request.POST)
 
