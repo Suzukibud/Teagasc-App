@@ -1,0 +1,147 @@
+\hypertarget{namespaceteagasc_1_1models}{}\doxysection{teagasc.\+models Namespace Reference}
+\label{namespaceteagasc_1_1models}\index{teagasc.models@{teagasc.models}}
+\doxysubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \mbox{\hyperlink{classteagasc_1_1models_1_1Exportation}{Exportation}}
+\item 
+class \mbox{\hyperlink{classteagasc_1_1models_1_1Farm__Records}{Farm\+\_\+\+Records}}
+\item 
+class \mbox{\hyperlink{classteagasc_1_1models_1_1Farmer}{Farmer}}
+\item 
+class \mbox{\hyperlink{classteagasc_1_1models_1_1Farmer__Feed}{Farmer\+\_\+\+Feed}}
+\item 
+class \mbox{\hyperlink{classteagasc_1_1models_1_1Farmer__Livestock}{Farmer\+\_\+\+Livestock}}
+\item 
+class \mbox{\hyperlink{classteagasc_1_1models_1_1Feed__Types}{Feed\+\_\+\+Types}}
+\item 
+class \mbox{\hyperlink{classteagasc_1_1models_1_1Grassland}{Grassland}}
+\item 
+class \mbox{\hyperlink{classteagasc_1_1models_1_1Importation}{Importation}}
+\item 
+class \mbox{\hyperlink{classteagasc_1_1models_1_1Monthly__Livestock__Numbers}{Monthly\+\_\+\+Livestock\+\_\+\+Numbers}}
+\item 
+class \mbox{\hyperlink{classteagasc_1_1models_1_1Slurry__Storage}{Slurry\+\_\+\+Storage}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+list {\bfseries counties}
+\item 
+dictionary {\bfseries counties\+\_\+with\+\_\+attrs}
+\item 
+\mbox{\Hypertarget{namespaceteagasc_1_1models_aaec3320ed94eb1c144fcbfa0e6417a9e}\label{namespaceteagasc_1_1models_aaec3320ed94eb1c144fcbfa0e6417a9e}} 
+list {\bfseries feed\+\_\+types} = \mbox{[}(\char`\"{}1\char`\"{}, \char`\"{}straight\char`\"{}), (\char`\"{}2\char`\"{}, \char`\"{}compound\char`\"{})\mbox{]}
+\item 
+list {\bfseries livestock\+\_\+type}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\begin{DoxyVerb}models.py contains all the models stored in the database
+\end{DoxyVerb}
+ 
+
+\doxysubsection{Variable Documentation}
+\mbox{\Hypertarget{namespaceteagasc_1_1models_af6072d58b027cc390fb55112374a38c5}\label{namespaceteagasc_1_1models_af6072d58b027cc390fb55112374a38c5}} 
+\index{teagasc.models@{teagasc.models}!counties@{counties}}
+\index{counties@{counties}!teagasc.models@{teagasc.models}}
+\doxysubsubsection{\texorpdfstring{counties}{counties}}
+{\footnotesize\ttfamily list teagasc.\+models.\+counties}
+
+{\bfseries Initial value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 =  [}
+\DoxyCodeLine{2     }
+\DoxyCodeLine{3     (\textcolor{stringliteral}{"carlow"}, \textcolor{stringliteral}{"Carlow"}),}
+\DoxyCodeLine{4     (\textcolor{stringliteral}{"cavan"}, \textcolor{stringliteral}{"Cavan"}),}
+\DoxyCodeLine{5     (\textcolor{stringliteral}{"clare"}, \textcolor{stringliteral}{"Clare"}),}
+\DoxyCodeLine{6     (\textcolor{stringliteral}{"cork"}, \textcolor{stringliteral}{"Cork"}),}
+\DoxyCodeLine{7     (\textcolor{stringliteral}{"donegal"}, \textcolor{stringliteral}{"Donegal"}),}
+\DoxyCodeLine{8     (\textcolor{stringliteral}{"dublin"}, \textcolor{stringliteral}{"Dublin"}),}
+\DoxyCodeLine{9     (\textcolor{stringliteral}{"galway"}, \textcolor{stringliteral}{"Galway"}),}
+\DoxyCodeLine{10     (\textcolor{stringliteral}{"kerry"}, \textcolor{stringliteral}{"Kerry"}),}
+\DoxyCodeLine{11     (\textcolor{stringliteral}{"kildare"}, \textcolor{stringliteral}{"Kildare"}),}
+\DoxyCodeLine{12     (\textcolor{stringliteral}{"kilkenny"}, \textcolor{stringliteral}{"Kilkenny"}),}
+\DoxyCodeLine{13     (\textcolor{stringliteral}{"laois"}, \textcolor{stringliteral}{"Laois"}),}
+\DoxyCodeLine{14     (\textcolor{stringliteral}{"leitrim"}, \textcolor{stringliteral}{"Leitrim"}),}
+\DoxyCodeLine{15     (\textcolor{stringliteral}{"limerick"}, \textcolor{stringliteral}{"Limerick"}),}
+\DoxyCodeLine{16     (\textcolor{stringliteral}{"longford"}, \textcolor{stringliteral}{"Longford"}),}
+\DoxyCodeLine{17     (\textcolor{stringliteral}{"louth"}, \textcolor{stringliteral}{"Louth"}),}
+\DoxyCodeLine{18     (\textcolor{stringliteral}{"mayo"}, \textcolor{stringliteral}{"Mayo"}),}
+\DoxyCodeLine{19     (\textcolor{stringliteral}{"meath"}, \textcolor{stringliteral}{"Meath"}),}
+\DoxyCodeLine{20     (\textcolor{stringliteral}{"monaghan"}, \textcolor{stringliteral}{"Monaghan"}),}
+\DoxyCodeLine{21     (\textcolor{stringliteral}{"offaly"}, \textcolor{stringliteral}{"Offaly"}),}
+\DoxyCodeLine{22     (\textcolor{stringliteral}{"roscommon"}, \textcolor{stringliteral}{"Roscommon"}),}
+\DoxyCodeLine{23     (\textcolor{stringliteral}{"sligo"}, \textcolor{stringliteral}{"Sligo"}),}
+\DoxyCodeLine{24     (\textcolor{stringliteral}{"tipperary"}, \textcolor{stringliteral}{"Tipperary"}),}
+\DoxyCodeLine{25     (\textcolor{stringliteral}{"waterford"}, \textcolor{stringliteral}{"Waterford"}),}
+\DoxyCodeLine{26     (\textcolor{stringliteral}{"westmeath"}, \textcolor{stringliteral}{"Westmeath"}),}
+\DoxyCodeLine{27     (\textcolor{stringliteral}{"wexford"}, \textcolor{stringliteral}{"Wexford"}),}
+\DoxyCodeLine{28     (\textcolor{stringliteral}{"wicklow"}, \textcolor{stringliteral}{"Wicklow"}),}
+\DoxyCodeLine{29 ]}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{namespaceteagasc_1_1models_aec88cacecdda9345c0a6a58852054237}\label{namespaceteagasc_1_1models_aec88cacecdda9345c0a6a58852054237}} 
+\index{teagasc.models@{teagasc.models}!counties\_with\_attrs@{counties\_with\_attrs}}
+\index{counties\_with\_attrs@{counties\_with\_attrs}!teagasc.models@{teagasc.models}}
+\doxysubsubsection{\texorpdfstring{counties\_with\_attrs}{counties\_with\_attrs}}
+{\footnotesize\ttfamily dictionary teagasc.\+models.\+counties\+\_\+with\+\_\+attrs}
+
+{\bfseries Initial value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 =  \{}
+\DoxyCodeLine{2     }
+\DoxyCodeLine{3     \textcolor{stringliteral}{"carlow"}: (\textcolor{stringliteral}{"Carlow"}, 0.024, \textcolor{stringliteral}{"a"}, 16),}
+\DoxyCodeLine{4     \textcolor{stringliteral}{"cavan"}: (\textcolor{stringliteral}{"Cavan"}, 0.027, \textcolor{stringliteral}{"d"}, 22),}
+\DoxyCodeLine{5     \textcolor{stringliteral}{"clare"}: (\textcolor{stringliteral}{"Clare"}, 0.032, \textcolor{stringliteral}{"b"}, 18),}
+\DoxyCodeLine{6     \textcolor{stringliteral}{"cork"}: (\textcolor{stringliteral}{"Cork"}, 0.037, \textcolor{stringliteral}{"a"}, 16),}
+\DoxyCodeLine{7     \textcolor{stringliteral}{"donegal"}: (\textcolor{stringliteral}{"Donegal"}, 0.038, \textcolor{stringliteral}{"c"}, 20),}
+\DoxyCodeLine{8     \textcolor{stringliteral}{"dublin"}: (\textcolor{stringliteral}{"Dublin"}, 0.017, \textcolor{stringliteral}{"a"}, 16),}
+\DoxyCodeLine{9     \textcolor{stringliteral}{"galway"}: (\textcolor{stringliteral}{"Galway"}, 0.034, \textcolor{stringliteral}{"b"}, 18),}
+\DoxyCodeLine{10     \textcolor{stringliteral}{"kerry"}: (\textcolor{stringliteral}{"Kerry"}, 0.045, \textcolor{stringliteral}{"b"}, 18),}
+\DoxyCodeLine{11     \textcolor{stringliteral}{"kildare"}: (\textcolor{stringliteral}{"Kildare"}, 0.018, \textcolor{stringliteral}{"a"}, 16),}
+\DoxyCodeLine{12     \textcolor{stringliteral}{"kilkenny"}: (\textcolor{stringliteral}{"Kilkenny"}, 0.023, \textcolor{stringliteral}{"a"}, 16),}
+\DoxyCodeLine{13     \textcolor{stringliteral}{"laois"}: (\textcolor{stringliteral}{"Laois"}, 0.022, \textcolor{stringliteral}{"a"}, 16),}
+\DoxyCodeLine{14     \textcolor{stringliteral}{"leitrim"}: (\textcolor{stringliteral}{"Leitrim"}, 0.033, \textcolor{stringliteral}{"c"}, 20),}
+\DoxyCodeLine{15     \textcolor{stringliteral}{"limerick"}: (\textcolor{stringliteral}{"Limerick"}, 0.026, \textcolor{stringliteral}{"b"}, 18),}
+\DoxyCodeLine{16     \textcolor{stringliteral}{"longford"}: (\textcolor{stringliteral}{"Longford"}, 0.023, \textcolor{stringliteral}{"b"}, 18),}
+\DoxyCodeLine{17     \textcolor{stringliteral}{"louth"}: (\textcolor{stringliteral}{"Louth"}, 0.020, \textcolor{stringliteral}{"b"}, 18),}
+\DoxyCodeLine{18     \textcolor{stringliteral}{"mayo"}: (\textcolor{stringliteral}{"Mayo"}, 0.040, \textcolor{stringliteral}{"b"}, 18),}
+\DoxyCodeLine{19     \textcolor{stringliteral}{"meath"}: (\textcolor{stringliteral}{"Meath"}, 0.019, \textcolor{stringliteral}{"b"}, 18),}
+\DoxyCodeLine{20     \textcolor{stringliteral}{"monaghan"}: (\textcolor{stringliteral}{"Monaghan"}, 0.023, \textcolor{stringliteral}{"d"}, 22),}
+\DoxyCodeLine{21     \textcolor{stringliteral}{"offaly"}: (\textcolor{stringliteral}{"Offaly"}, 0.020, \textcolor{stringliteral}{"a"}, 16),}
+\DoxyCodeLine{22     \textcolor{stringliteral}{"roscommon"}: (\textcolor{stringliteral}{"Roscommon"}, 26, \textcolor{stringliteral}{"b"}, 18),}
+\DoxyCodeLine{23     \textcolor{stringliteral}{"sligo"}: (\textcolor{stringliteral}{"Sligo"}, 0.032, \textcolor{stringliteral}{"b"}, 18),}
+\DoxyCodeLine{24     \textcolor{stringliteral}{"tipperary"}: (\textcolor{stringliteral}{"Tipperary"}, 0.027, \textcolor{stringliteral}{"a"}, 16),}
+\DoxyCodeLine{25     \textcolor{stringliteral}{"waterford"}: (\textcolor{stringliteral}{"Waterford"}, 0.031, \textcolor{stringliteral}{"a"}, 16),}
+\DoxyCodeLine{26     \textcolor{stringliteral}{"westmeath"}: (\textcolor{stringliteral}{"Westmeath"}, 0.021, \textcolor{stringliteral}{"b"}, 18),}
+\DoxyCodeLine{27     \textcolor{stringliteral}{"wexford"}: (\textcolor{stringliteral}{"Wexford"}, 0.025, \textcolor{stringliteral}{"a"}, 16),}
+\DoxyCodeLine{28     \textcolor{stringliteral}{"wicklow"}: (\textcolor{stringliteral}{"Wicklow"}, 0.033, \textcolor{stringliteral}{"a"}, 16),}
+\DoxyCodeLine{29 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{namespaceteagasc_1_1models_a74007bb9bb9eb852c199b3f08e9c6536}\label{namespaceteagasc_1_1models_a74007bb9bb9eb852c199b3f08e9c6536}} 
+\index{teagasc.models@{teagasc.models}!livestock\_type@{livestock\_type}}
+\index{livestock\_type@{livestock\_type}!teagasc.models@{teagasc.models}}
+\doxysubsubsection{\texorpdfstring{livestock\_type}{livestock\_type}}
+{\footnotesize\ttfamily list teagasc.\+models.\+livestock\+\_\+type}
+
+{\bfseries Initial value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 =  [}
+\DoxyCodeLine{2     (\textcolor{stringliteral}{"15"}, \textcolor{stringliteral}{"Dairy Cow"}),}
+\DoxyCodeLine{3     (\textcolor{stringliteral}{"2"}, \textcolor{stringliteral}{"Suckler Cow"}),}
+\DoxyCodeLine{4     (\textcolor{stringliteral}{"3"}, \textcolor{stringliteral}{"Cattle (0-\/1 year old)"}),}
+\DoxyCodeLine{5     (\textcolor{stringliteral}{"4"}, \textcolor{stringliteral}{"Cattle (1-\/2 years old)"}),}
+\DoxyCodeLine{6     (\textcolor{stringliteral}{"5"}, \textcolor{stringliteral}{"Cattle > 2 years"}),}
+\DoxyCodeLine{7     (\textcolor{stringliteral}{"6"}, \textcolor{stringliteral}{"Mountain ewe \& lambs"}),}
+\DoxyCodeLine{8     (\textcolor{stringliteral}{"7"}, \textcolor{stringliteral}{"Lowland ewe \& lambs"}),}
+\DoxyCodeLine{9     (\textcolor{stringliteral}{"8"}, \textcolor{stringliteral}{"Mountain hogget"}),}
+\DoxyCodeLine{10     (\textcolor{stringliteral}{"9"}, \textcolor{stringliteral}{"Lowland hogget"}),}
+\DoxyCodeLine{11     (\textcolor{stringliteral}{"10"}, \textcolor{stringliteral}{"Goat"}),}
+\DoxyCodeLine{12     (\textcolor{stringliteral}{"11"}, \textcolor{stringliteral}{"Horse (>3 years old)"}),}
+\DoxyCodeLine{13     (\textcolor{stringliteral}{"12"}, \textcolor{stringliteral}{"Horse (2-\/3 years old)"}),}
+\DoxyCodeLine{14 ]}
+
+\end{DoxyCode}

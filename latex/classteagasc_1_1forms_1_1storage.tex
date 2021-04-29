@@ -1,0 +1,83 @@
+\hypertarget{classteagasc_1_1forms_1_1storage}{}\doxysection{teagasc.\+forms.\+storage Class Reference}
+\label{classteagasc_1_1forms_1_1storage}\index{teagasc.forms.storage@{teagasc.forms.storage}}
+
+
+Inheritance diagram for teagasc.\+forms.\+storage\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=206pt]{classteagasc_1_1forms_1_1storage__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for teagasc.\+forms.\+storage\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=206pt]{classteagasc_1_1forms_1_1storage__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classteagasc_1_1forms_1_1storage_a025b14d3dbc3d53edcc3cbeadba50ed0}\label{classteagasc_1_1forms_1_1storage_a025b14d3dbc3d53edcc3cbeadba50ed0}} 
+def {\bfseries clean} (self)
+\end{DoxyCompactItemize}
+\doxysubsection*{Static Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+{\bfseries farmer\+\_\+name}
+\item 
+\mbox{\Hypertarget{classteagasc_1_1forms_1_1storage_af08fbd6d75cd24e660211d340ed0dbb4}\label{classteagasc_1_1forms_1_1storage_af08fbd6d75cd24e660211d340ed0dbb4}} 
+tuple {\bfseries T\+Y\+PE} = ((\char`\"{}Slurry\char`\"{}, \char`\"{}Slurry\char`\"{}), (\char`\"{}Farmyard Manure\char`\"{}, \char`\"{}Farmyard Manure\char`\"{}))
+\item 
+\mbox{\Hypertarget{classteagasc_1_1forms_1_1storage_a15f832deb37c6a5faaca2855f1823e77}\label{classteagasc_1_1forms_1_1storage_a15f832deb37c6a5faaca2855f1823e77}} 
+{\bfseries choice} = forms.\+Choice\+Field(choices=T\+Y\+PE)
+\item 
+\mbox{\Hypertarget{classteagasc_1_1forms_1_1storage_ae136e7d82a13f19159c25350c877bb85}\label{classteagasc_1_1forms_1_1storage_ae136e7d82a13f19159c25350c877bb85}} 
+tuple {\bfseries C\+H\+O\+I\+C\+ES} = ((\char`\"{}Indoor\char`\"{}, \char`\"{}Indoor\char`\"{}), (\char`\"{}Outdoor\char`\"{}, \char`\"{}Outdoor\char`\"{}))
+\item 
+\mbox{\Hypertarget{classteagasc_1_1forms_1_1storage_acd12a529107216d92d54f4d81b349f3d}\label{classteagasc_1_1forms_1_1storage_acd12a529107216d92d54f4d81b349f3d}} 
+{\bfseries option} = forms.\+Choice\+Field(choices=C\+H\+O\+I\+C\+ES)
+\item 
+\mbox{\Hypertarget{classteagasc_1_1forms_1_1storage_aac1dc087def355ecd0c7094ff1334c31}\label{classteagasc_1_1forms_1_1storage_aac1dc087def355ecd0c7094ff1334c31}} 
+{\bfseries length} = forms.\+Float\+Field(widget=forms.\+Text\+Input(attrs=\{\char`\"{}class\char`\"{}\+: \char`\"{}formclass\char`\"{}\}))
+\item 
+\mbox{\Hypertarget{classteagasc_1_1forms_1_1storage_a22d2ed66074f571c1ad10274ac8d4994}\label{classteagasc_1_1forms_1_1storage_a22d2ed66074f571c1ad10274ac8d4994}} 
+{\bfseries breadth} = forms.\+Float\+Field(widget=forms.\+Text\+Input(attrs=\{\char`\"{}class\char`\"{}\+: \char`\"{}formclass\char`\"{}\}))
+\item 
+\mbox{\Hypertarget{classteagasc_1_1forms_1_1storage_ad57dab178f6751f3f485d56280601860}\label{classteagasc_1_1forms_1_1storage_ad57dab178f6751f3f485d56280601860}} 
+{\bfseries height} = forms.\+Float\+Field(widget=forms.\+Text\+Input(attrs=\{\char`\"{}class\char`\"{}\+: \char`\"{}formclass\char`\"{}\}))
+\item 
+\mbox{\Hypertarget{classteagasc_1_1forms_1_1storage_a409cfbad7e26156476fb5aa52dd657de}\label{classteagasc_1_1forms_1_1storage_a409cfbad7e26156476fb5aa52dd657de}} 
+{\bfseries add\+\_\+another\+\_\+container} = forms.\+Boolean\+Field(required=False)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\begin{DoxyVerb}This form will take in the farmers storage information
+\end{DoxyVerb}
+ 
+
+\doxysubsection{Member Data Documentation}
+\mbox{\Hypertarget{classteagasc_1_1forms_1_1storage_a021b411c4aeeba22ce702fec4140ca2e}\label{classteagasc_1_1forms_1_1storage_a021b411c4aeeba22ce702fec4140ca2e}} 
+\index{teagasc.forms.storage@{teagasc.forms.storage}!farmer\_name@{farmer\_name}}
+\index{farmer\_name@{farmer\_name}!teagasc.forms.storage@{teagasc.forms.storage}}
+\doxysubsubsection{\texorpdfstring{farmer\_name}{farmer\_name}}
+{\footnotesize\ttfamily teagasc.\+forms.\+storage.\+farmer\+\_\+name\hspace{0.3cm}{\ttfamily [static]}}
+
+{\bfseries Initial value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{=  forms.CharField(}
+\DoxyCodeLine{        widget=forms.TextInput(attrs=\{\textcolor{stringliteral}{"autocomplete"}: \textcolor{stringliteral}{"off"}, \textcolor{stringliteral}{"list"}: \textcolor{stringliteral}{"farmers"}\})}
+\DoxyCodeLine{    )}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+teagasc/forms.\+py\end{DoxyCompactItemize}

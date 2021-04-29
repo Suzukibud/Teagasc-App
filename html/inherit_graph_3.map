@@ -1,0 +1,13 @@
+<map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
+<area shape="rect" id="node1" title=" " alt="" coords="5,265,68,292"/>
+<area shape="rect" id="node2" href="$classteagasc_1_1models_1_1Exportation.html" title=" " alt="" coords="120,5,324,32"/>
+<area shape="rect" id="node3" href="$classteagasc_1_1models_1_1Farm__Records.html" title=" " alt="" coords="141,57,303,98"/>
+<area shape="rect" id="node4" href="$classteagasc_1_1models_1_1Farmer.html" title=" " alt="" coords="135,123,309,149"/>
+<area shape="rect" id="node5" href="$classteagasc_1_1models_1_1Farmer__Feed.html" title=" " alt="" coords="116,173,328,200"/>
+<area shape="rect" id="node6" href="$classteagasc_1_1models_1_1Farmer__Livestock.html" title=" " alt="" coords="135,225,309,266"/>
+<area shape="rect" id="node7" href="$classteagasc_1_1models_1_1Feed__Types.html" title=" " alt="" coords="142,290,302,331"/>
+<area shape="rect" id="node8" href="$classteagasc_1_1models_1_1Grassland.html" title=" " alt="" coords="125,356,319,383"/>
+<area shape="rect" id="node9" href="$classteagasc_1_1models_1_1Importation.html" title=" " alt="" coords="119,407,325,433"/>
+<area shape="rect" id="node10" href="$classteagasc_1_1models_1_1Monthly__Livestock__Numbers.html" title=" " alt="" coords="131,458,313,499"/>
+<area shape="rect" id="node11" href="$classteagasc_1_1models_1_1Slurry__Storage.html" title=" " alt="" coords="139,523,305,565"/>
+</map>

@@ -1,0 +1,77 @@
+\hypertarget{classteagasc_1_1forms_1_1import__Export}{}\doxysection{teagasc.\+forms.\+import\+\_\+\+Export Class Reference}
+\label{classteagasc_1_1forms_1_1import__Export}\index{teagasc.forms.import\_Export@{teagasc.forms.import\_Export}}
+
+
+Inheritance diagram for teagasc.\+forms.\+import\+\_\+\+Export\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=202pt]{classteagasc_1_1forms_1_1import__Export__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for teagasc.\+forms.\+import\+\_\+\+Export\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=202pt]{classteagasc_1_1forms_1_1import__Export__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsection*{Static Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classteagasc_1_1forms_1_1import__Export_ab0e17243688cd07d4a4e90271a16538d}\label{classteagasc_1_1forms_1_1import__Export_ab0e17243688cd07d4a4e90271a16538d}} 
+tuple {\bfseries C\+H\+O\+I\+C\+ES} = ((\char`\"{}Import\char`\"{}, \char`\"{}Import\char`\"{}), (\char`\"{}Export\char`\"{}, \char`\"{}Export\char`\"{}))
+\item 
+\mbox{\Hypertarget{classteagasc_1_1forms_1_1import__Export_a13ac91b6e8bd7070f67625fc9825d118}\label{classteagasc_1_1forms_1_1import__Export_a13ac91b6e8bd7070f67625fc9825d118}} 
+{\bfseries option} = forms.\+Choice\+Field(choices=C\+H\+O\+I\+C\+ES)
+\item 
+{\bfseries farmer\+\_\+name}
+\item 
+{\bfseries farmyard\+\_\+manure\+\_\+\+\_\+tonnes}
+\item 
+\mbox{\Hypertarget{classteagasc_1_1forms_1_1import__Export_a644cd74a876e1a651037e7b3326d17ae}\label{classteagasc_1_1forms_1_1import__Export_a644cd74a876e1a651037e7b3326d17ae}} 
+{\bfseries slurry\+\_\+\+\_\+tonnes} = forms.\+Float\+Field(widget=forms.\+Text\+Input(attrs=\{\char`\"{}class\char`\"{}\+: \char`\"{}formclass\char`\"{}\}))
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\begin{DoxyVerb}This form will take in the farmers Import Export information
+\end{DoxyVerb}
+ 
+
+\doxysubsection{Member Data Documentation}
+\mbox{\Hypertarget{classteagasc_1_1forms_1_1import__Export_a35b4992a7f866f303c3bb2af377fa3b7}\label{classteagasc_1_1forms_1_1import__Export_a35b4992a7f866f303c3bb2af377fa3b7}} 
+\index{teagasc.forms.import\_Export@{teagasc.forms.import\_Export}!farmer\_name@{farmer\_name}}
+\index{farmer\_name@{farmer\_name}!teagasc.forms.import\_Export@{teagasc.forms.import\_Export}}
+\doxysubsubsection{\texorpdfstring{farmer\_name}{farmer\_name}}
+{\footnotesize\ttfamily teagasc.\+forms.\+import\+\_\+\+Export.\+farmer\+\_\+name\hspace{0.3cm}{\ttfamily [static]}}
+
+{\bfseries Initial value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{=  forms.CharField(}
+\DoxyCodeLine{        widget=forms.TextInput(attrs=\{\textcolor{stringliteral}{"autocomplete"}: \textcolor{stringliteral}{"off"}, \textcolor{stringliteral}{"list"}: \textcolor{stringliteral}{"farmers"}\})}
+\DoxyCodeLine{    )}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{classteagasc_1_1forms_1_1import__Export_a63b6c5003c539d0b3498933ae5190554}\label{classteagasc_1_1forms_1_1import__Export_a63b6c5003c539d0b3498933ae5190554}} 
+\index{teagasc.forms.import\_Export@{teagasc.forms.import\_Export}!farmyard\_manure\_\_tonnes@{farmyard\_manure\_\_tonnes}}
+\index{farmyard\_manure\_\_tonnes@{farmyard\_manure\_\_tonnes}!teagasc.forms.import\_Export@{teagasc.forms.import\_Export}}
+\doxysubsubsection{\texorpdfstring{farmyard\_manure\_\_tonnes}{farmyard\_manure\_\_tonnes}}
+{\footnotesize\ttfamily teagasc.\+forms.\+import\+\_\+\+Export.\+farmyard\+\_\+manure\+\_\+\+\_\+tonnes\hspace{0.3cm}{\ttfamily [static]}}
+
+{\bfseries Initial value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{=  forms.FloatField(}
+\DoxyCodeLine{        widget=forms.TextInput(attrs=\{\textcolor{stringliteral}{"class"}: \textcolor{stringliteral}{"formclass"}\})}
+\DoxyCodeLine{    )}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+teagasc/forms.\+py\end{DoxyCompactItemize}

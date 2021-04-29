@@ -1,0 +1,80 @@
+\hypertarget{classteagasc_1_1migrations_1_10006__auto__20210408__1302_1_1Migration}{}\doxysection{teagasc.\+migrations.0006\+\_\+auto\+\_\+20210408\+\_\+1302.\+Migration Class Reference}
+\label{classteagasc_1_1migrations_1_10006__auto__20210408__1302_1_1Migration}\index{teagasc.migrations.0006\_auto\_20210408\_1302.Migration@{teagasc.migrations.0006\_auto\_20210408\_1302.Migration}}
+
+
+Inheritance diagram for teagasc.\+migrations.0006\+\_\+auto\+\_\+20210408\+\_\+1302.\+Migration\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=256pt]{classteagasc_1_1migrations_1_10006__auto__20210408__1302_1_1Migration__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for teagasc.\+migrations.0006\+\_\+auto\+\_\+20210408\+\_\+1302.\+Migration\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=256pt]{classteagasc_1_1migrations_1_10006__auto__20210408__1302_1_1Migration__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsection*{Static Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+list {\bfseries dependencies}
+\item 
+list {\bfseries operations}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Member Data Documentation}
+\mbox{\Hypertarget{classteagasc_1_1migrations_1_10006__auto__20210408__1302_1_1Migration_af0b6c3f709fdaee9d8cbf6d385cb860f}\label{classteagasc_1_1migrations_1_10006__auto__20210408__1302_1_1Migration_af0b6c3f709fdaee9d8cbf6d385cb860f}} 
+\index{teagasc.migrations.0006\_auto\_20210408\_1302.Migration@{teagasc.migrations.0006\_auto\_20210408\_1302.Migration}!dependencies@{dependencies}}
+\index{dependencies@{dependencies}!teagasc.migrations.0006\_auto\_20210408\_1302.Migration@{teagasc.migrations.0006\_auto\_20210408\_1302.Migration}}
+\doxysubsubsection{\texorpdfstring{dependencies}{dependencies}}
+{\footnotesize\ttfamily list teagasc.\+migrations.\+0006\+\_\+auto\+\_\+20210408\+\_\+1302.\+Migration.\+dependencies\hspace{0.3cm}{\ttfamily [static]}}
+
+{\bfseries Initial value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{=  [}
+\DoxyCodeLine{        (\textcolor{stringliteral}{'teagasc'}, \textcolor{stringliteral}{'0005\_auto\_20210408\_1301'}),}
+\DoxyCodeLine{    ]}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{classteagasc_1_1migrations_1_10006__auto__20210408__1302_1_1Migration_ab36208971d5f8663beb4292e4eaaa05a}\label{classteagasc_1_1migrations_1_10006__auto__20210408__1302_1_1Migration_ab36208971d5f8663beb4292e4eaaa05a}} 
+\index{teagasc.migrations.0006\_auto\_20210408\_1302.Migration@{teagasc.migrations.0006\_auto\_20210408\_1302.Migration}!operations@{operations}}
+\index{operations@{operations}!teagasc.migrations.0006\_auto\_20210408\_1302.Migration@{teagasc.migrations.0006\_auto\_20210408\_1302.Migration}}
+\doxysubsubsection{\texorpdfstring{operations}{operations}}
+{\footnotesize\ttfamily list teagasc.\+migrations.\+0006\+\_\+auto\+\_\+20210408\+\_\+1302.\+Migration.\+operations\hspace{0.3cm}{\ttfamily [static]}}
+
+{\bfseries Initial value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{=  [}
+\DoxyCodeLine{        migrations.RemoveField(}
+\DoxyCodeLine{            model\_name=\textcolor{stringliteral}{'slurry\_storage'},}
+\DoxyCodeLine{            name=\textcolor{stringliteral}{'manure\_m3'},}
+\DoxyCodeLine{        ),}
+\DoxyCodeLine{        migrations.RemoveField(}
+\DoxyCodeLine{            model\_name=\textcolor{stringliteral}{'slurry\_storage'},}
+\DoxyCodeLine{            name=\textcolor{stringliteral}{'slurry\_m3'},}
+\DoxyCodeLine{        ),}
+\DoxyCodeLine{        migrations.AddField(}
+\DoxyCodeLine{            model\_name=\textcolor{stringliteral}{'monthly\_livestock\_numbers'},}
+\DoxyCodeLine{            name=\textcolor{stringliteral}{'manure\_m3'},}
+\DoxyCodeLine{            field=models.FloatField(null=\textcolor{keyword}{True}),}
+\DoxyCodeLine{        ),}
+\DoxyCodeLine{        migrations.AddField(}
+\DoxyCodeLine{            model\_name=\textcolor{stringliteral}{'monthly\_livestock\_numbers'},}
+\DoxyCodeLine{            name=\textcolor{stringliteral}{'slurry\_m3'},}
+\DoxyCodeLine{            field=models.FloatField(null=\textcolor{keyword}{True}),}
+\DoxyCodeLine{        ),}
+\DoxyCodeLine{    ]}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+teagasc/migrations/0006\+\_\+auto\+\_\+20210408\+\_\+1302.\+py\end{DoxyCompactItemize}

@@ -1,0 +1,138 @@
+\hypertarget{classteagasc_1_1forms_1_1GrasslandForm}{}\doxysection{teagasc.\+forms.\+Grassland\+Form Class Reference}
+\label{classteagasc_1_1forms_1_1GrasslandForm}\index{teagasc.forms.GrasslandForm@{teagasc.forms.GrasslandForm}}
+
+
+Inheritance diagram for teagasc.\+forms.\+Grassland\+Form\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=243pt]{classteagasc_1_1forms_1_1GrasslandForm__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for teagasc.\+forms.\+Grassland\+Form\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=243pt]{classteagasc_1_1forms_1_1GrasslandForm__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsection*{Static Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+{\bfseries farmer\+\_\+name}
+\item 
+{\bfseries farmer\+\_\+address\+\_\+line\+\_\+1}
+\item 
+{\bfseries farmer\+\_\+address\+\_\+line\+\_\+2}
+\item 
+{\bfseries farmer\+\_\+address\+\_\+line\+\_\+3}
+\item 
+{\bfseries date}
+\item 
+{\bfseries county}
+\item 
+\mbox{\Hypertarget{classteagasc_1_1forms_1_1GrasslandForm_a4dea91b7fcee66c739bff1856b9d8238}\label{classteagasc_1_1forms_1_1GrasslandForm_a4dea91b7fcee66c739bff1856b9d8238}} 
+{\bfseries herd\+\_\+no} = forms.\+Char\+Field(widget=forms.\+Text\+Input(attrs=\{\char`\"{}class\char`\"{}\+: \char`\"{}formclass\char`\"{}\}))
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\begin{DoxyVerb}This form will take in the farmers personal information
+\end{DoxyVerb}
+ 
+
+\doxysubsection{Member Data Documentation}
+\mbox{\Hypertarget{classteagasc_1_1forms_1_1GrasslandForm_abb21684d73bd14dacd06f50382819da5}\label{classteagasc_1_1forms_1_1GrasslandForm_abb21684d73bd14dacd06f50382819da5}} 
+\index{teagasc.forms.GrasslandForm@{teagasc.forms.GrasslandForm}!county@{county}}
+\index{county@{county}!teagasc.forms.GrasslandForm@{teagasc.forms.GrasslandForm}}
+\doxysubsubsection{\texorpdfstring{county}{county}}
+{\footnotesize\ttfamily teagasc.\+forms.\+Grassland\+Form.\+county\hspace{0.3cm}{\ttfamily [static]}}
+
+{\bfseries Initial value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{=  forms.CharField(}
+\DoxyCodeLine{        label=\textcolor{stringliteral}{"Please select a County "},}
+\DoxyCodeLine{        widget=forms.Select(}
+\DoxyCodeLine{            choices=counties, attrs=\{\textcolor{stringliteral}{"class"}: \textcolor{stringliteral}{"formclass"}, \textcolor{stringliteral}{"style"}: \textcolor{stringliteral}{"width:276px"}\}}
+\DoxyCodeLine{        ),}
+\DoxyCodeLine{        max\_length=1,}
+\DoxyCodeLine{    )}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{classteagasc_1_1forms_1_1GrasslandForm_a969c0019fa7d111e5b1985fad4577c47}\label{classteagasc_1_1forms_1_1GrasslandForm_a969c0019fa7d111e5b1985fad4577c47}} 
+\index{teagasc.forms.GrasslandForm@{teagasc.forms.GrasslandForm}!date@{date}}
+\index{date@{date}!teagasc.forms.GrasslandForm@{teagasc.forms.GrasslandForm}}
+\doxysubsubsection{\texorpdfstring{date}{date}}
+{\footnotesize\ttfamily teagasc.\+forms.\+Grassland\+Form.\+date\hspace{0.3cm}{\ttfamily [static]}}
+
+{\bfseries Initial value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{=  forms.DateField(}
+\DoxyCodeLine{        initial=datetime.date.today,}
+\DoxyCodeLine{        widget=forms.widgets.DateInput(attrs=\{\textcolor{stringliteral}{"type"}: \textcolor{stringliteral}{"date"}\}),}
+\DoxyCodeLine{    )}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{classteagasc_1_1forms_1_1GrasslandForm_a994011aae0cd950642cd714bf0ff1cf5}\label{classteagasc_1_1forms_1_1GrasslandForm_a994011aae0cd950642cd714bf0ff1cf5}} 
+\index{teagasc.forms.GrasslandForm@{teagasc.forms.GrasslandForm}!farmer\_address\_line\_1@{farmer\_address\_line\_1}}
+\index{farmer\_address\_line\_1@{farmer\_address\_line\_1}!teagasc.forms.GrasslandForm@{teagasc.forms.GrasslandForm}}
+\doxysubsubsection{\texorpdfstring{farmer\_address\_line\_1}{farmer\_address\_line\_1}}
+{\footnotesize\ttfamily teagasc.\+forms.\+Grassland\+Form.\+farmer\+\_\+address\+\_\+line\+\_\+1\hspace{0.3cm}{\ttfamily [static]}}
+
+{\bfseries Initial value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{=  forms.CharField(}
+\DoxyCodeLine{        max\_length=30,}
+\DoxyCodeLine{        required=\textcolor{keyword}{True},}
+\DoxyCodeLine{        widget=forms.TextInput(attrs=\{\textcolor{stringliteral}{"class"}: \textcolor{stringliteral}{"formclass"}\}),}
+\DoxyCodeLine{    )}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{classteagasc_1_1forms_1_1GrasslandForm_a1e2045967b6dabfda91d0505b7eb8a7f}\label{classteagasc_1_1forms_1_1GrasslandForm_a1e2045967b6dabfda91d0505b7eb8a7f}} 
+\index{teagasc.forms.GrasslandForm@{teagasc.forms.GrasslandForm}!farmer\_address\_line\_2@{farmer\_address\_line\_2}}
+\index{farmer\_address\_line\_2@{farmer\_address\_line\_2}!teagasc.forms.GrasslandForm@{teagasc.forms.GrasslandForm}}
+\doxysubsubsection{\texorpdfstring{farmer\_address\_line\_2}{farmer\_address\_line\_2}}
+{\footnotesize\ttfamily teagasc.\+forms.\+Grassland\+Form.\+farmer\+\_\+address\+\_\+line\+\_\+2\hspace{0.3cm}{\ttfamily [static]}}
+
+{\bfseries Initial value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{=  forms.CharField(}
+\DoxyCodeLine{        max\_length=30, widget=forms.TextInput(attrs=\{\textcolor{stringliteral}{"class"}: \textcolor{stringliteral}{"formclass"}\})}
+\DoxyCodeLine{    )}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{classteagasc_1_1forms_1_1GrasslandForm_aeb19db7dff04a59ad3575b2d8ef4437c}\label{classteagasc_1_1forms_1_1GrasslandForm_aeb19db7dff04a59ad3575b2d8ef4437c}} 
+\index{teagasc.forms.GrasslandForm@{teagasc.forms.GrasslandForm}!farmer\_address\_line\_3@{farmer\_address\_line\_3}}
+\index{farmer\_address\_line\_3@{farmer\_address\_line\_3}!teagasc.forms.GrasslandForm@{teagasc.forms.GrasslandForm}}
+\doxysubsubsection{\texorpdfstring{farmer\_address\_line\_3}{farmer\_address\_line\_3}}
+{\footnotesize\ttfamily teagasc.\+forms.\+Grassland\+Form.\+farmer\+\_\+address\+\_\+line\+\_\+3\hspace{0.3cm}{\ttfamily [static]}}
+
+{\bfseries Initial value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{=  forms.CharField(}
+\DoxyCodeLine{        max\_length=30, widget=forms.TextInput(attrs=\{\textcolor{stringliteral}{"class"}: \textcolor{stringliteral}{"formclass"}\})}
+\DoxyCodeLine{    )}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{classteagasc_1_1forms_1_1GrasslandForm_ab5b16e23868c0ca725bb3ee0199214d8}\label{classteagasc_1_1forms_1_1GrasslandForm_ab5b16e23868c0ca725bb3ee0199214d8}} 
+\index{teagasc.forms.GrasslandForm@{teagasc.forms.GrasslandForm}!farmer\_name@{farmer\_name}}
+\index{farmer\_name@{farmer\_name}!teagasc.forms.GrasslandForm@{teagasc.forms.GrasslandForm}}
+\doxysubsubsection{\texorpdfstring{farmer\_name}{farmer\_name}}
+{\footnotesize\ttfamily teagasc.\+forms.\+Grassland\+Form.\+farmer\+\_\+name\hspace{0.3cm}{\ttfamily [static]}}
+
+{\bfseries Initial value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{=  forms.CharField(}
+\DoxyCodeLine{        max\_length=30, widget=forms.TextInput(attrs=\{\textcolor{stringliteral}{"class"}: \textcolor{stringliteral}{"formclass"}\})}
+\DoxyCodeLine{    )}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+teagasc/forms.\+py\end{DoxyCompactItemize}

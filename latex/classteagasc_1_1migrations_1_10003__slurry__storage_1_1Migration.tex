@@ -1,0 +1,76 @@
+\hypertarget{classteagasc_1_1migrations_1_10003__slurry__storage_1_1Migration}{}\doxysection{teagasc.\+migrations.0003\+\_\+slurry\+\_\+storage.\+Migration Class Reference}
+\label{classteagasc_1_1migrations_1_10003__slurry__storage_1_1Migration}\index{teagasc.migrations.0003\_slurry\_storage.Migration@{teagasc.migrations.0003\_slurry\_storage.Migration}}
+
+
+Inheritance diagram for teagasc.\+migrations.0003\+\_\+slurry\+\_\+storage.\+Migration\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=221pt]{classteagasc_1_1migrations_1_10003__slurry__storage_1_1Migration__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for teagasc.\+migrations.0003\+\_\+slurry\+\_\+storage.\+Migration\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=221pt]{classteagasc_1_1migrations_1_10003__slurry__storage_1_1Migration__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsection*{Static Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+list {\bfseries dependencies}
+\item 
+list {\bfseries operations}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Member Data Documentation}
+\mbox{\Hypertarget{classteagasc_1_1migrations_1_10003__slurry__storage_1_1Migration_a2430b5ddee6fc1c6dc6f48596fa7d48f}\label{classteagasc_1_1migrations_1_10003__slurry__storage_1_1Migration_a2430b5ddee6fc1c6dc6f48596fa7d48f}} 
+\index{teagasc.migrations.0003\_slurry\_storage.Migration@{teagasc.migrations.0003\_slurry\_storage.Migration}!dependencies@{dependencies}}
+\index{dependencies@{dependencies}!teagasc.migrations.0003\_slurry\_storage.Migration@{teagasc.migrations.0003\_slurry\_storage.Migration}}
+\doxysubsubsection{\texorpdfstring{dependencies}{dependencies}}
+{\footnotesize\ttfamily list teagasc.\+migrations.\+0003\+\_\+slurry\+\_\+storage.\+Migration.\+dependencies\hspace{0.3cm}{\ttfamily [static]}}
+
+{\bfseries Initial value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{=  [}
+\DoxyCodeLine{        (\textcolor{stringliteral}{'teagasc'}, \textcolor{stringliteral}{'0002\_delete\_slurry\_storage'}),}
+\DoxyCodeLine{    ]}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{classteagasc_1_1migrations_1_10003__slurry__storage_1_1Migration_a069fe0bb97ee55a58438ddd6d613bb61}\label{classteagasc_1_1migrations_1_10003__slurry__storage_1_1Migration_a069fe0bb97ee55a58438ddd6d613bb61}} 
+\index{teagasc.migrations.0003\_slurry\_storage.Migration@{teagasc.migrations.0003\_slurry\_storage.Migration}!operations@{operations}}
+\index{operations@{operations}!teagasc.migrations.0003\_slurry\_storage.Migration@{teagasc.migrations.0003\_slurry\_storage.Migration}}
+\doxysubsubsection{\texorpdfstring{operations}{operations}}
+{\footnotesize\ttfamily list teagasc.\+migrations.\+0003\+\_\+slurry\+\_\+storage.\+Migration.\+operations\hspace{0.3cm}{\ttfamily [static]}}
+
+{\bfseries Initial value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{=  [}
+\DoxyCodeLine{        migrations.CreateModel(}
+\DoxyCodeLine{            name=\textcolor{stringliteral}{'Slurry\_Storage'},}
+\DoxyCodeLine{            fields=[}
+\DoxyCodeLine{                (\textcolor{stringliteral}{'id'}, models.AutoField(auto\_created=\textcolor{keyword}{True}, primary\_key=\textcolor{keyword}{True}, serialize=\textcolor{keyword}{False}, verbose\_name=\textcolor{stringliteral}{'ID'})),}
+\DoxyCodeLine{                (\textcolor{stringliteral}{'length'}, models.FloatField(null=\textcolor{keyword}{True})),}
+\DoxyCodeLine{                (\textcolor{stringliteral}{'breadth'}, models.FloatField(null=\textcolor{keyword}{True})),}
+\DoxyCodeLine{                (\textcolor{stringliteral}{'height'}, models.FloatField(null=\textcolor{keyword}{True})),}
+\DoxyCodeLine{                (\textcolor{stringliteral}{'zone'}, models.IntegerField(null=\textcolor{keyword}{True})),}
+\DoxyCodeLine{                (\textcolor{stringliteral}{'total\_slurry\_manure'}, models.FloatField(null=\textcolor{keyword}{True})),}
+\DoxyCodeLine{                (\textcolor{stringliteral}{'total\_storage'}, models.FloatField(null=\textcolor{keyword}{True})),}
+\DoxyCodeLine{                (\textcolor{stringliteral}{'rainfall'}, models.FloatField(null=\textcolor{keyword}{True})),}
+\DoxyCodeLine{                (\textcolor{stringliteral}{'farmer\_id'}, models.ForeignKey(default=1, on\_delete=django.db.models.deletion.CASCADE, to=\textcolor{stringliteral}{'teagasc.farmer'})),}
+\DoxyCodeLine{            ],}
+\DoxyCodeLine{        ),}
+\DoxyCodeLine{    ]}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+teagasc/migrations/0003\+\_\+slurry\+\_\+storage.\+py\end{DoxyCompactItemize}
