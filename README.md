@@ -5,6 +5,6 @@
 # Student of IT Carlow
 
 
-This app will be designed to function as a tool for a Teagasc advisor to assess farmers grant applications.
+This application was built using Django and Python with the purpose of performing nitrate assessments for Teagasc Advisors.
 
 Built using Django and Python 
